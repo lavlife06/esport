@@ -1,0 +1,1 @@
+export const SAMPLE_DATA_FETCH = 'SAMPLE_DATA_FETCH';
