@@ -1,20 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { /*useEffect,*/ useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { sampleDataFetch } from './Redux/actions/sample';
+// import { sampleDataFetch } from './Redux/actions/sample';
+import { register } from './Redux/actions/auth';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.sample); //mapStateToProps replacement
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); //mapStateToProps replacement
 
-  useEffect(() => {
-    dispatch(sampleDataFetch());
-  }, []);
+  const [registerinfo, setRegisterInfo] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const { name, email, password } = registerinfo;
+
+  const changeHandler = (item, input) => {
+    setRegisterInfo({ ...registerinfo, [input]: item });
+    console.log(item);
+  };
+
+  // useEffect(() => {
+  //   dispatch(sampleDataFetch());
+  // }, []);
   return (
     <View style={styles.container}>
-      {user.map(({name, age}) => (
-        <Text>{name} {age}</Text>
-      ))}
+      {!isAuthenticated && (
+        <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            placeholder="name"
+            onChangeText={(name) => changeHandler(name, 'name')}
+            value={name}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="email"
+            onChangeText={(email) => changeHandler(email, 'email')}
+            value={email}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="password"
+            onChangeText={(password) => changeHandler(password, 'password')}
+            value={password}
+          />
+          <Button
+            color="coral"
+            onPress={() => {
+              // console.log('pressed');
+              dispatch(register({ name, email, password }));
+            }}
+            title="Submit"
+          />
+        </View>
+      )}
+
+      {isAuthenticated && <Text>'True'</Text>}
     </View>
   );
 };
@@ -25,6 +68,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input: {
+    marginBottom: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
   },
 });
 
