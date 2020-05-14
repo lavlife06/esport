@@ -34,7 +34,7 @@ import axios from 'axios';
 // };
 
 // Register user
-export const register = ({ email, password, name }) => async (dispatch) => {
+export const register = ({ name, email, password }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -72,44 +72,44 @@ export const register = ({ email, password, name }) => async (dispatch) => {
   }
 };
 
-// Login user
-export const login = (email, password) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+// // Login user
+// export const login = (email, password) => async (dispatch) => {
+//   const config = {
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   };
 
-  const body = JSON.stringify({ email, password });
+//   const body = JSON.stringify({ email, password });
 
-  try {
-    const res = await axios.post(
-      'http://localhost:3000/api/login',
-      body,
-      config
-    );
+//   try {
+//     const res = await axios.post(
+//       'http://localhost:3000/api/login',
+//       body,
+//       config
+//     );
 
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
-    });
+//     dispatch({
+//       type: LOGIN_SUCCESS,
+//       payload: res.data,
+//     });
 
-    // dispatch(loadUser());
-  } catch (err) {
-    const errors = err.response.data.errors; // This errors will come from backend
-    // that we setted as errors.array
-    if (errors) {
-      console.log(errors);
-      // errors.forEach((error) => {
-      //   dispatch(setAlert(error.msg, 'danger'));
-      // });
-    }
+//     // dispatch(loadUser());
+//   } catch (err) {
+//     const errors = err.response.data.errors; // This errors will come from backend
+//     // that we setted as errors.array
+//     if (errors) {
+//       console.log(errors);
+//       // errors.forEach((error) => {
+//       //   dispatch(setAlert(error.msg, 'danger'));
+//       // });
+//     }
 
-    dispatch({
-      type: LOGIN_FAIL,
-    });
-  }
-};
+//     dispatch({
+//       type: LOGIN_FAIL,
+//     });
+//   }
+// };
 
 // // Logout / Clear Profile
 // export const logout = () => (dispatch) => {

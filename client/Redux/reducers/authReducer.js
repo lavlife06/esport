@@ -9,7 +9,7 @@ import {
   // ACCOUNT_DELETED,
 } from '../actions/types';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 
 const initialState = {
   token: AsyncStorage.getItem('token'),
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case REGISTER_SUCCESS:
-    case LOGIN_SUCCESS:
+      // case LOGIN_SUCCESS:
       AsyncStorage.setItem('token', payload.token);
       return {
         ...state,
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
     //     user: payload,
     //   };
     case REGISTER_FAIL:
-    case LOGIN_FAIL:
+      // case LOGIN_FAIL:
       // case AUTH_ERROR:
       AsyncStorage.removeItem('token');
       return {

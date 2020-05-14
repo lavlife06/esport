@@ -18,7 +18,7 @@ const MainComponent = () => {
 
   const changeHandler = (item, input) => {
     setRegisterInfo({ ...registerinfo, [input]: item });
-    console.log(item);
+    // console.log(item);
   };
 
   // useEffect(() => {
