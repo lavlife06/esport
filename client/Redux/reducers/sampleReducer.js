@@ -1,12 +1,14 @@
-import { SAMPLE_DATA_FETCH } from "../actions/types";
+import { SAMPLE_DATA_FETCH } from '../actions/types';
 
-const initialState = {name: 'NO NAME', age: 'NO AGE'}
+const initialState = [];
 
-export default function(state = [], action){
-  switch(action.type){
+export default function (state = initialState, action) {
+  const { payload, type } = action;
+
+  switch (type) {
     case SAMPLE_DATA_FETCH:
-      return action.payload
-    default: 
-      return state
+      return payload;
+    default:
+      return state;
   }
 }
