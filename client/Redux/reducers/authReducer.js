@@ -1,12 +1,10 @@
-import { SAMPLE_DATA_FETCH } from "../actions/types";
-
-const initialState = []
+import {FETCH_USER } from "../actions/types";
 
 export default function(state = [], action){
   const {type, payload} = action
   console.log(payload)
   switch(type){
-    case SAMPLE_DATA_FETCH:
+    case FETCH_USER:
       return payload
     default: 
       return state

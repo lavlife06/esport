@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { sampleDataFetch } from './Redux/actions/sample';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.sample) //mapStateToProps replacement
+  const user = useSelector(state => state.sample); //mapStateToProps replacement
 
   useEffect(() => {
-    dispatch(sampleDataFetch())
-  }, [])
-
+    dispatch(sampleDataFetch());
+  }, []);
   return (
     <View style={styles.container}>
-      <Text>{user.name}</Text>
+      {user.map(({name, age}) => (
+        <Text>{name} {age}</Text>
+      ))}
     </View>
   );
-}
- 
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

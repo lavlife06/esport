@@ -1,1 +1,2 @@
 export const SAMPLE_DATA_FETCH = 'SAMPLE_DATA_FETCH';
+export const FETCH_USER = 'FETCH_USER'
