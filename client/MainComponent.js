@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-// import { sampleDataFetch } from './Redux/actions/sample';
+import GoogleSignin from './GoogleSigin';
 import { register } from './Redux/actions/auth';
 import axios from 'axios';
 import * as Google from 'expo-google-app-auth';
@@ -42,6 +42,7 @@ const MainComponent = () => {
           googlelogin();
         }}
       /> */}
+      <GoogleSignin />
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput

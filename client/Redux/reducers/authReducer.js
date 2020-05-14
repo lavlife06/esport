@@ -10,6 +10,7 @@ import {
 } from '../actions/types';
 
 import { AsyncStorage } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
   token: AsyncStorage.getItem('token'),
