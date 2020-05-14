@@ -5,18 +5,16 @@ import { sampleDataFetch } from './Redux/actions/sample';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.sample); //mapStateToProps replacement
-  const name = user.map((item) => {
-    return item.name;
-  });
+  const user = useSelector(state => state.sample); //mapStateToProps replacement
 
   useEffect(() => {
     dispatch(sampleDataFetch());
   }, []);
   return (
     <View style={styles.container}>
-      <Text>{name[0]}</Text>
-      <Text>{name[1]}</Text>
+      {user.map(({name, age}) => (
+        <Text>{name} {age}</Text>
+      ))}
     </View>
   );
 };
