@@ -1,8 +1,9 @@
 import React, { /*useEffect,*/ useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 // import { sampleDataFetch } from './Redux/actions/sample';
 import { register } from './Redux/actions/auth';
+import axios from 'axios';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -21,11 +22,13 @@ const MainComponent = () => {
     // console.log(item);
   };
 
-  // useEffect(() => {
-  //   dispatch(sampleDataFetch());
-  // }, []);
+  const googleLogin = () =>{
+    
+  }
+
   return (
     <View style={styles.container}>
+      <Button title='google login' onPress={() => Linking.openURL('http://localhost:3000/auth/google')}/>
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput

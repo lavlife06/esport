@@ -4,6 +4,7 @@ const allschemas = require('../../models/Schemas');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
+const keys = require('../../../config/keys');
 const User = allschemas.User;
 
 // @route POST api/signup
