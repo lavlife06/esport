@@ -1,7 +1,7 @@
 import React, { /*useEffect,*/ useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-// import { sampleDataFetch } from './Redux/actions/sample';
+import GoogleSignin from './GoogleSigin'
 import { register } from './Redux/actions/auth';
 import axios from 'axios';
 
@@ -28,7 +28,7 @@ const MainComponent = () => {
 
   return (
     <View style={styles.container}>
-      <Button title='google login' onPress={() => Linking.openURL('http://localhost:3000/auth/google')}/>
+      <GoogleSignin/>
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput
