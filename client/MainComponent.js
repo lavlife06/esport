@@ -1,9 +1,17 @@
-import React, { /*useEffect,*/ useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Linking,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 // import { sampleDataFetch } from './Redux/actions/sample';
 import { register } from './Redux/actions/auth';
 import axios from 'axios';
+import * as Google from 'expo-google-app-auth';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -22,13 +30,18 @@ const MainComponent = () => {
     // console.log(item);
   };
 
-  const googleLogin = () =>{
-    
-  }
+  // const googleLogin = () =>{
+
+  // }
 
   return (
     <View style={styles.container}>
-      <Button title='google login' onPress={() => Linking.openURL('http://localhost:3000/auth/google')}/>
+      {/* <Button
+        title="google login"
+        onPress={() => {
+          googlelogin();
+        }}
+      /> */}
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput
@@ -52,7 +65,7 @@ const MainComponent = () => {
           <Button
             color="coral"
             onPress={() => {
-              // console.log('pressed');
+              console.log(name, email, password);
               dispatch(register({ name, email, password }));
             }}
             title="Submit"
