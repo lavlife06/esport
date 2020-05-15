@@ -1,7 +1,14 @@
-import React, { /*useEffect,*/ useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Linking } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Linking,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import GoogleSignin from './GoogleSigin'
+import GoogleSignin from './GoogleSigin';
 import { register } from './Redux/actions/auth';
 import axios from 'axios';
 import { globalStyles } from './styles/global';
@@ -21,14 +28,14 @@ const MainComponent = () => {
 
   const changeHandler = (item, input) => {
     setRegisterInfo({ ...registerinfo, [input]: item });
-    console.log(item);
+    // console.log(item);
   };
 
 
   return (
     <View style={globalStyles.container}>
-      <Login/>
-      {/* <GoogleSignin/>
+      
+      <GoogleSignin />
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput
@@ -52,7 +59,6 @@ const MainComponent = () => {
           <Button
             color="coral"
             onPress={() => {
-              // console.log('pressed');
               dispatch(register({ name, email, password }));
             }}
             title="Submit"
@@ -60,7 +66,7 @@ const MainComponent = () => {
         </View>
       )}
 
-      {isAuthenticated && <Text>'True'</Text>} */}
+      {isAuthenticated && <Text>'True'</Text>}
     </View>
   );
 };

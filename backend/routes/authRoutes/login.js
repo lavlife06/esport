@@ -1,15 +1,13 @@
 const express = require('express');
-const router = express.Router();
 const verify = require('../../verifytokenmw/verify_mv');
 const allschemas = require('../../models/Schemas');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const keys = require('../../../config/keys')
+const keys = require('../../../config/keys');
 const { check, validationResult } = require('express-validator');
 const User = allschemas.User;
 
 module.exports = (app) => {
-
   app.get('/api/login', verify, async (req, res) => {
     try {
       const user = await User.findById(req.user.id).select('-password');
@@ -20,7 +18,8 @@ module.exports = (app) => {
     }
   });
 
-  app.post('/api/login',
+  app.post(
+    '/api/login',
     [
       check('email', 'Please include a valid email').isEmail(),
       check('password', 'Password is required').exists(),
@@ -32,16 +31,16 @@ module.exports = (app) => {
       }
       let { email, password } = req.body;
       try {
-        // let user = await User.findOne({ email: email })               
+        // let user = await User.findOne({ email: email })
         let user = await User.findOne({ email });
-  
+
         // Check for existence of user exits
         if (!user) {
           return res
             .status(400)
             .json({ errors: [{ msg: 'Invalid credentials' }] });
         }
-  
+
         const isMatch = await bcrypt.compare(password, user.password);
         // user.password is from database
         if (!isMatch) {
@@ -71,6 +70,4 @@ module.exports = (app) => {
       }
     }
   );
-}
-
-
+};

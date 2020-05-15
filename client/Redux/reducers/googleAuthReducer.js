@@ -1,6 +1,6 @@
 import {  GOOGLE_LOGIN, GOOGLE_LOGOUT, GET_CACHED_AUTH_ASYNC} from '../actions/types';
 
-const initialState = {}
+const initialState = null
 
 
 export default function(state = initialState, action){

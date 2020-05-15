@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const app = express();
-
 // Implementing cors
 app.use(cors());
 
@@ -22,6 +21,8 @@ const sampleData = [
 app.get('/api/name', (req, res) => {
   res.json(sampleData);
 });
+
+
 
 require('./backend/routes/authRoutes/signup')(app)
 require('./backend/routes/authRoutes/login')(app)

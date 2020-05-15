@@ -13,7 +13,8 @@ let StorageKey = '@MyApp:fskdajitreg4d5v46ecxcv';
 export const signInAsync = () => async dispatch => {
   let authState = await AppAuth.authAsync(config);
   await AsyncStorage.setItem(StorageKey, JSON.stringify(authState));
-  console.log('signInAsync', authState);
+  // console.log('signInAsync', authState);
+  await
   dispatch({type: GOOGLE_LOGIN, payload: authState})
 }
 

@@ -11,8 +11,6 @@ const prefix = Linking.makeUrl('exp://192.168.43.100:19000')
 export default function GoogleSignin0() {
   const authState = useSelector(state => state.googleAuth);
   const dispatch = useDispatch();
-
-  const linking = {
     prefixes: [prefix],
   }
 
@@ -40,7 +38,7 @@ export default function GoogleSignin0() {
             await dispatch(signOutAsync(authState))
           }}
         />
-        {/* <Text>{authState.scopes}</Text> */}
+        {/* {authState && <Text>{res}</Text>} */}
       </View>
     </NavigationContainer>
   );
