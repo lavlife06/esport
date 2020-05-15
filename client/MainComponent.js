@@ -41,7 +41,7 @@ const MainComponent = () => {
           googlelogin();
         }}
       /> */}
-      <GoogleSignin />
+      {/* <GoogleSignin /> */}
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput
