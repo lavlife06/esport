@@ -22,9 +22,6 @@ const MainComponent = () => {
     console.log(item);
   };
 
-  const googleLogin = () =>{
-    
-  }
 
   return (
     <View style={styles.container}>

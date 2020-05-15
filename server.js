@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const passport = require('passport')
 const connectDB = require('./config/db');
-require('./backend/services/passport')
 const app = express();
 
 // Implementing cors
@@ -15,8 +13,6 @@ connectDB();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 const sampleData = [
   { name: 'Bhavesh', age: 20 },
