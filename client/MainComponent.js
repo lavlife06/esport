@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import GoogleSignin from './GoogleSigin';
 import { register } from './Redux/actions/auth';
 import axios from 'axios';
-import * as Google from 'expo-google-app-auth';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
