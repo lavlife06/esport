@@ -1,40 +1,44 @@
 import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
-  // AUTH_ERROR,
-  // USER_LOADED,
+  AUTH_ERROR,
+  USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   // LOGOUT,
 } from './types';
 import axios from 'axios';
 // import { setAlert } from './alert';
-// import setAuthToken from '../utils/setAuthToken';
+import setAuthToken from '../setAuthToken';
+import { AsyncStorage } from 'react-native';
 
-// //  Load User
-// export const loadUser = () => async (dispatch) => {
-//   // set header
-//   if (localStorage.token) {
-//     setAuthToken(localStorage.token);
-//   }
+//  Load User
+export const loadUser = () => async (dispatch) => {
+  // set header
+  if (AsyncStorage.token) {
+    setAuthToken(AsyncStorage.token);
+    console.log(AsyncStorage.token);
+  } else {
+    console.log('notoken');
+  }
 
-//   try {
-//     const res = await axios.get('http://localhost:3000/api/login');
+  try {
+    const res = await axios.get('http://localhost:3000/api/login');
 
-//     dispatch({
-//       type: USER_LOADED,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     console.log('there is an error userdata-loading');
-//     dispatch({
-//       type: AUTH_ERROR,
-//     });
-//   }
-// };
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log('there is an error userdata-loading');
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 // Register user
-export const register = ({ email, password, name }) => async (dispatch) => {
+export const register = ({ name, email, password }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -55,7 +59,7 @@ export const register = ({ email, password, name }) => async (dispatch) => {
       payload: res.data,
     });
 
-    // dispatch(loadUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
@@ -94,7 +98,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
 
-    // dispatch(loadUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
