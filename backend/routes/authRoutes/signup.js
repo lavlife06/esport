@@ -1,10 +1,9 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
-const allschemas = require('../../models/Schemas');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
-const User = allschemas.User;
+const User = require('../../models/User');
 
 // @route POST api/signup
 // desc   test route

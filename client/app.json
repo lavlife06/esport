@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "esport",
     "name": "client",
     "slug": "client",
     "platforms": ["ios", "android", "web"],
