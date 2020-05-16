@@ -8,10 +8,10 @@ import { signInAsync, getCachedAuthAsync, signOutAsync } from './Redux/actions/g
 
 const prefix = Linking.makeUrl('exp://192.168.43.100:19000')
 
-export default function GoogleSignin0() {
+export default function GoogleSignin() {
   const authState = useSelector(state => state.googleAuth);
+  //authState is array of [authState, response.data] from action googleAuth
   const dispatch = useDispatch();
-
   const linking = {
     prefixes: [prefix],
   }
@@ -28,19 +28,25 @@ export default function GoogleSignin0() {
     <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
       <View style={styles.container}>
         <Text>Expo AppAuth Example</Text>
-        <Button
+        {!authState && 
+          <Button
           title="Sign In with Google "
           onPress={async () => {
             dispatch(signInAsync());
           }}
         />
-        <Button
-          title="Sign Out "
-          onPress={async () => {
-            await dispatch(signOutAsync(authState))
-          }}
-        />
-        {/* <Text>{authState.scopes}</Text> */}
+        }
+        {!authState ? null : 
+          <View>
+            <Text>{authState[1].name} {authState[1].email}</Text>
+            <Button
+            title="Sign Out "
+            onPress={async () => {
+              dispatch(signOutAsync(authState[0]))
+            }}
+            />
+          </View>
+        }
       </View>
     </NavigationContainer>
   );

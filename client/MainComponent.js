@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import GoogleSignin from './GoogleSigin';
 import { register } from './Redux/actions/auth';
 import axios from 'axios';
+import { globalStyles } from './styles/global';
+import Login from './screens/login/login';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -31,14 +33,9 @@ const MainComponent = () => {
 
 
   return (
-    <View style={styles.container}>
-      {/* <Button
-        title="google login"
-        onPress={() => {
-          googlelogin();
-        }}
-      /> */}
-      {/* <GoogleSignin /> */}
+    <View style={globalStyles.container}>
+      
+      <GoogleSignin />
       {!isAuthenticated && (
         <View style={styles.container}>
           <TextInput
@@ -62,7 +59,6 @@ const MainComponent = () => {
           <Button
             color="coral"
             onPress={() => {
-              console.log(name, email, password);
               dispatch(register({ name, email, password }));
             }}
             title="Submit"

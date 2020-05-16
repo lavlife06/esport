@@ -1,11 +1,10 @@
 const express = require('express');
 const verify = require('../../verifytokenmw/verify_mv');
-const allschemas = require('../../models/Schemas');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 const { check, validationResult } = require('express-validator');
-const User = allschemas.User;
+const User = require('../../models/User');
 
 module.exports = (app) => {
   app.get('/api/login', verify, async (req, res) => {
