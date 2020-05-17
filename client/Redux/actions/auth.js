@@ -11,6 +11,7 @@ import axios from 'axios';
 // import { setAlert } from './alert';
 import setAuthToken from '../setAuthToken';
 import { AsyncStorage } from 'react-native';
+import { ipAddress } from '../ipaddress';
 
 //  Load User
 // export const loadUser = () => async (dispatch) => {
@@ -36,6 +37,28 @@ import { AsyncStorage } from 'react-native';
 //     });
 //   }
 // };
+export const loadUser = () => async (dispatch) => {
+  // set header
+  if (AsyncStorage.token) {
+    setAuthToken(AsyncStorage.token);
+    console.log(AsyncStorage.token);
+  } else {
+    console.log('notoken');
+  }
+  try {
+    const res = await axios.get(`http://${ipAddress}:3000/api/login`);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log('there is an error userdata-loading');
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 // Register user
 export const register = ({ name, email, password }) => async (dispatch) => {
@@ -45,11 +68,11 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     },
   };
 
-  const body = JSON.stringify({ name, email, password });
+  const body = { name, email, password };
 
   try {
     const res = await axios.post(
-      'http://localhost:3000/api/signup',
+      `http://${ipAddress}:3000/api/signup`,
       body,
       config
     );
@@ -61,13 +84,9 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 
     // dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors; // This errors will come from backend
-    // that we setted as errors.array
+    const errors = err.response.data.errors;
     if (errors) {
-      console.log(errors);
-      // errors.forEach((error) => {
-      //   dispatch(setAlert(error.msg, 'danger'));
-      // });
+      // console.log("signup error: ",errors);
     }
 
     dispatch({
@@ -88,7 +107,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const res = await axios.post(
-      'http://localhost:3000/api/login',
+      `http://${ipAddress}:3000/api/login`,
       body,
       config
     );

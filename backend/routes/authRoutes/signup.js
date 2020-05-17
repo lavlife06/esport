@@ -1,10 +1,9 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
-const allschemas = require('../../models/Schemas');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
-const User = allschemas.User;
+const User = require('../../models/User');
 
 // @route POST api/signup
 // desc   test route
@@ -30,7 +29,6 @@ module.exports = (app) => {
 
       // Remove space between the name if any
       name = name.trim().split(' ').join('');
-      console.log(name);
 
       try {
         // let user = await User.findOne({ email: email })
@@ -72,7 +70,7 @@ module.exports = (app) => {
 
         // Save data to atlas
         await user.save(); // In atlas data will be saved
-
+        console.log('user added')
         // create jsonwebtoken
         let payload = {
           user: {

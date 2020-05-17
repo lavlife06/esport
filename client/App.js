@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './Redux/store';
 import MainComponent from './MainComponent';
+
 import { AsyncStorage } from 'react-native';
 import setAuthToken from './Redux/setAuthToken';
 
@@ -14,10 +14,13 @@ const App = () => {
 
   return (
     <Provider store={store}>
+    {/* <ApplicationProvider {...eva} theme={eva.light}> */}
       <MainComponent />
+    {/* </ApplicationProvider> */}
     </Provider>
   );
 };
+
 
 // const styles = StyleSheet.create({
 //   container: {
