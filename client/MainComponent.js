@@ -6,7 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import SignUp from './screens/auth/signup';
 import { ThemeProvider } from 'react-native-elements';
 import { theme } from './styles/theme';
-import AuthNavigator from './routes/authStack'
+import Login from './screens/auth/login';
+import { View } from 'react-native';
+import { globalStyles } from './styles/global';
+// import AuthNavigator from './routes/authStack'
 
 const MainComponent = () => {
   const [isReady ,setIsReady] = useState(true)
@@ -16,7 +19,9 @@ const MainComponent = () => {
   else{
     return (
       <ThemeProvider theme={theme}>
-        <AuthNavigator/>
+      <View style={globalStyles.container}>
+        <Login/>
+      </View>
       </ThemeProvider>
     );
   }
