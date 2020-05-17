@@ -12,21 +12,18 @@ import { globalStyles } from './styles/global';
 // import AuthNavigator from './routes/authStack'
 
 const MainComponent = () => {
-  const [isReady ,setIsReady] = useState(true)
-  if(!isReady){
-    return <AppLoading/>
-  }
-  else{
+  const [isReady, setIsReady] = useState(true);
+  if (!isReady) {
+    return <AppLoading />;
+  } else {
     return (
       <ThemeProvider theme={theme}>
-      <View style={globalStyles.container}>
-        <Login/>
-      </View>
+        <View style={globalStyles.container}>
+          <Login />
+        </View>
       </ThemeProvider>
     );
   }
 };
-
-
 
 export default MainComponent;

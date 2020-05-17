@@ -53,16 +53,16 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       body,
       config
     );
-    
+
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
 
     dispatch(loadUser());
-    
   } catch (err) {
-    const errors = err.response.data.errors; 
+    const errors = err.response.data.errors;
+    // this errors are the errors send form the backend
     if (errors) {
       // console.log("signup error: ",errors);
     }
