@@ -31,6 +31,7 @@ export async function cacheAuthAsync(authState) {
 
 export const getCachedAuthAsync = () => async dispatch =>{
   let value = await AsyncStorage.getItem(StorageKey);
+  console.log(value[0])
   let authState = await JSON.parse(value[0]);
   let res = await JSON.parse(value[1]);
   if (authState) {

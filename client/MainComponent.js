@@ -12,8 +12,17 @@ import GoogleSignin from './GoogleSigin';
 import { register } from './Redux/actions/auth';
 import { login } from './Redux/actions/auth';
 import axios from 'axios';
+// import Login from './screens/auth/login';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+import SignUp from './screens/auth/signup';
+import { ThemeProvider } from 'react-native-elements';
+import { theme } from './styles/theme';
+import Login from './screens/auth/login';
+import { View } from 'react-native';
 import { globalStyles } from './styles/global';
-import Login from './screens/login/login';
+// import AuthNavigator from './routes/authStack'
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -70,20 +79,18 @@ const MainComponent = () => {
       {isAuthenticated && <Text>'True'</Text>}
     </View>
   );
+  const [isReady, setIsReady] = useState(true);
+  if (!isReady) {
+    return <AppLoading />;
+  } else {
+    return (
+      <ThemeProvider theme={theme}>
+        <View style={globalStyles.container}>
+          <Login />
+        </View>
+      </ThemeProvider>
+    );
+  }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    marginBottom: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
-});
 
 export default MainComponent;

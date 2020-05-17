@@ -4,8 +4,7 @@ import { StyleSheet } from 'react-native';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 40,
-    backgroundColor: 'white'
+    padding: 20,
   },
   titleText: {
     fontWeight: "700",
@@ -27,8 +26,8 @@ export const globalStyles = StyleSheet.create({
   errorText: {
     color: 'crimson',
     fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 6,
+    marginBottom: 3,
+    marginTop: 3,
     textAlign: 'center'
   }
 });
