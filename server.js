@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const passport = require('passport')
+const passport = require('passport');
 const connectDB = require('./config/db');
-require('./backend/services/passport')
+require('./backend/services/passport');
 const app = express();
 
 // Implementing cors
@@ -27,9 +27,9 @@ app.get('/api/name', (req, res) => {
   res.json(sampleData);
 });
 
-require('./backend/routes/authRoutes/signup')(app)
-require('./backend/routes/authRoutes/login')(app)
-require('./backend/routes/authRoutes/googleAuth')(app)
+require('./backend/routes/authRoutes/signup')(app);
+require('./backend/routes/authRoutes/login')(app);
+require('./backend/routes/authRoutes/googleAuth')(app);
 
 const PORT = process.env.PORT || 3000;
 

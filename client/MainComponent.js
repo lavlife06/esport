@@ -10,6 +10,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import GoogleSignin from './GoogleSigin';
 import { register } from './Redux/actions/auth';
+import { login } from './Redux/actions/auth';
 import axios from 'axios';
 
 const MainComponent = () => {
@@ -17,12 +18,12 @@ const MainComponent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); //mapStateToProps replacement
 
   const [registerinfo, setRegisterInfo] = useState({
-    name: '',
+    // name: '',
     email: '',
     password: '',
   });
 
-  const { name, email, password } = registerinfo;
+  const { /*name,*/ email, password } = registerinfo;
 
   const changeHandler = (item, input) => {
     setRegisterInfo({ ...registerinfo, [input]: item });
@@ -44,12 +45,12 @@ const MainComponent = () => {
       {/* <GoogleSignin /> */}
       {!isAuthenticated && (
         <View style={styles.container}>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             placeholder="name"
             onChangeText={(name) => changeHandler(name, 'name')}
             value={name}
-          />
+          /> */}
           <TextInput
             style={styles.input}
             placeholder="email"
@@ -65,8 +66,8 @@ const MainComponent = () => {
           <Button
             color="coral"
             onPress={() => {
-              console.log(name, email, password);
-              dispatch(register({ name, email, password }));
+              // console.log(name, email, password);
+              dispatch(login(email, password));
             }}
             title="Submit"
           />

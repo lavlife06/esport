@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "expo",
     "name": "client",
     "slug": "client",
     "platforms": ["ios", "android", "web"],

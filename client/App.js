@@ -7,10 +7,10 @@ import { AsyncStorage } from 'react-native';
 import setAuthToken from './Redux/setAuthToken';
 
 const App = () => {
-  useEffect(() => {
-    setAuthToken(AsyncStorage.token);
-    console.log(' App refreshed');
-  }, [setAuthToken]);
+  // useEffect(() => {
+  //   setAuthToken(AsyncStorage.token);
+  //   console.log(' App refreshed');
+  // }, [setAuthToken]);
 
   return (
     <Provider store={store}>
