@@ -1,7 +1,6 @@
 const express = require('express');
 const verify = require('../../verifytokenmw/verify_mv');
-const keys = require('../../../config/keys');
-const { check, validationResult } = require('express-validator');
+// const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 
@@ -9,11 +8,11 @@ module.exports = (app) => {
   // Note:--
   // req.user.id comes from the token
 
-  // @route GET api/profile/me
+  // @route GET /api/profile/me
   // desc   test route
   // access Private
 
-  app.get('api/profile/me', verify, async (req, res) => {
+  app.get('/api/profile/me', verify, async (req, res) => {
     try {
       const profile = await Profile.findOne({
         user: req.user.id,
@@ -32,10 +31,10 @@ module.exports = (app) => {
     }
   });
 
-  // @route POST api/profile/me
+  // @route POST /api/profile/me
   // desc   post personal profile
   // access Private
-  app.post('api/profile/me', verify, async (req, res) => {
+  app.post('/api/profile/me', verify, async (req, res) => {
     let {
       bio,
       gameinterest,
@@ -54,6 +53,7 @@ module.exports = (app) => {
 
     // build profile object
     let profileFields = {};
+    profileFields.user = req.user.id;
     // profileFields.achievements = [];
     // profileFields.otherlinks = [];
     if (bio) profileFields.bio = bio;
@@ -89,12 +89,12 @@ module.exports = (app) => {
     }
   });
 
-  // @route GET api/profile/user/:username
+  // @route GET /api/profile/user/:username
   // desc   get profiles of the searched users
   // access Public
   // This is not for specific user because it returns multiple users almost matching with same name
   // This will be helpfull when someone searches for another player or organization
-  app.get('api/profile/user/:username', async (req, res) => {
+  app.get('/api/profile/user/:username', async (req, res) => {
     try {
       const profiles = await Profile.find({
         name: { $regex: '^' + req.params.username, $options: 'i' },
@@ -109,11 +109,11 @@ module.exports = (app) => {
     }
   });
 
-  // @route    GET api/profile/user/:user_id
+  // @route    GET /api/profile/user/:user_id
   // @desc     Get profile by user ID
   // @access   Public
   // This is for specific user searched
-  app.get('api/profile/user/:user_id', async (req, res) => {
+  app.get('/api/profile/user/:user_id', async (req, res) => {
     try {
       const profile = await Profile.findOne({
         user: req.params.user_id,
@@ -129,11 +129,11 @@ module.exports = (app) => {
     }
   });
 
-  // @route    PUT api/profile/followhandle/:id
+  // @route    PUT /api/profile/followhandle/:id
   // @desc     Follow a user
   // @access   Private
   //  This is if user want to follow someone
-  app.put('api/profile/followhandle/:id', verify, async (req, res) => {
+  app.put('/api/profile/followhandle/:id', verify, async (req, res) => {
     try {
       const profile = await Profile.findById(req.params.id); // This is the profile of the person
       // to whom we are going to follow
@@ -172,11 +172,11 @@ module.exports = (app) => {
     }
   });
 
-  // @route    PUT api/profile/unfollowhandle/:id
+  // @route    PUT /api/profile/unfollowhandle/:id
   // @desc     Unfollow a user
   // @access   Private
   //  This is if user want to unfollow someone
-  app.put('api/profile/unfollowhandle/:id', verify, async (req, res) => {
+  app.put('/api/profile/unfollowhandle/:id', verify, async (req, res) => {
     try {
       const profile = await Profile.findById(req.params.id); // This is the profile of the person
       // to whom we are going to unfollow
@@ -225,21 +225,21 @@ module.exports = (app) => {
     }
   });
 
-  // @route    DELETE api/profile
+  // @route    DELETE /api/profile
   // @desc     Delete profile, user & posts
   // @access   Private
-  app.delete('api/profile/', verify, async (req, res) => {
-    try {
-      // Remove profile
-      await Profile.findOneAndRemove({ user: req.user.id });
+  // app.delete('/api/profile/', verify, async (req, res) => {
+  //   try {
+  //     // Remove profile
+  //     await Profile.findOneAndRemove({ user: req.user.id });
 
-      // Remove user
-      await User.findOneAndRemove({ _id: req.user.id });
+  //     // Remove user
+  //     await User.findOneAndRemove({ _id: req.user.id });
 
-      res.json({ msg: 'User deleted' });
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  });
+  //     res.json({ msg: 'User deleted' });
+  //   } catch (err) {
+  //     console.error(err.message);
+  //     res.status(500).send('Server Error');
+  //   }
+  // });
 };
