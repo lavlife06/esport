@@ -38,7 +38,7 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = (name, email, password ) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   };
 
   const body = { name, email, password };
-
+  console.log(body)
   try {
     const res = await axios.post(
       `http://${ipAddress}:3000/api/signup`,
@@ -58,8 +58,8 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-
-    dispatch(loadUser());
+    
+    loadUser()
     
   } catch (err) {
     const errors = err.response.data.errors; 
@@ -82,7 +82,7 @@ export const login = (email, password) => async (dispatch) => {
   };
 
   const body = JSON.stringify({ email, password });
-
+  
   try {
     const res = await axios.post(
       `http://${ipAddress}:3000/api/login`,
@@ -95,12 +95,13 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(loadUser());
+    // dispatch(loadUser());
+
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
     if (errors) {
-      console.log(errors);
+      console.log('error from login', errors);
       // errors.forEach((error) => {
       //   dispatch(setAlert(error.msg, 'danger'));
       // });

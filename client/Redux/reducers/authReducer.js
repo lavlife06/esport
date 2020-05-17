@@ -5,6 +5,7 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SIGNUP_SUCCESS,
   // LOGOUT,
   // ACCOUNT_DELETED,
 } from '../actions/types';
@@ -25,19 +26,18 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
       AsyncStorage.setItem('token', payload.token);
       return {
-        ...state,
-        ...payload,
+        payload,
         isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:
       return {
-        ...state,
         isAuthenticated: true,
         loading: false,
         user: payload,
       };
-    case REGISTER_FAIL:
+    case SIGNUP_SUCCESS:
+      return {payload}
     case LOGIN_FAIL:
     case AUTH_ERROR:
       AsyncStorage.removeItem('token');

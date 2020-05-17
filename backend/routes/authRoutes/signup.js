@@ -35,10 +35,9 @@ module.exports = (app) => {
         //                  ||
         let user = await User.findOne({ email });
         // See if user exits
+        console.log(user)
         if (user) {
-          return res
-            .status(400)
-            .json({ errors: [{ msg: 'User already exits' }] });
+          return res.send('You already have an account.')
         }
 
         // Create tag

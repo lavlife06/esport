@@ -1,7 +1,8 @@
 export const theme = {
-  // Button: {
-  //   backgroundColor: {
-  //     color: '#4ecca3',
-  //   },
-  // },
+  Button: {
+    buttonStyle: {
+      borderRadius: 20,
+      backgroundColor: '#4ecca3'
+    }
+  },
 }

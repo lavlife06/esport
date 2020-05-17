@@ -1,31 +1,25 @@
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../screens/auth/login'
-import SignUp from '../screens/auth/signup';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from '../screens/auth/login';
+import UserDetail from '../screens/userDetail/userDetail';
+const Stack = createStackNavigator()
 
-const Stack = createStackNavigator();
-
-const AuthNavigator = () => {
+const AuthRoute = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
-          name="Login"
-          // options={({ navigation, route }) => ({
-          //   headerTitle: () => <Header navigation={navigation} title='About GameZone'/>,
-          // })}
-          component={Login} 
+        <Stack.Screen
+          name='Auth'
+          component={Login}
         />
-        <Stack.Screen 
-          name="Sign Up"
-          // options={({ navigation, route }) => ({
-          //   headerTitle: () => <Header navigation={navigation} title='About GameZone'/>,
-          // })}
-          component={SignUp} 
+        <Stack.Screen
+          name='Your Detail'
+          component={UserDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
  
-export default AuthNavigator;
+export default AuthRoute;
