@@ -14,29 +14,6 @@ import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
 
 //  Load User
-// export const loadUser = () => async (dispatch) => {
-//   // set header
-//   if (AsyncStorage.token) {
-//     setAuthToken(AsyncStorage.token);
-//     console.log(AsyncStorage.token);
-//   } else {
-//     console.log('notoken');
-//   }
-
-//   try {
-//     const res = await axios.get('http://localhost:3000/api/login');
-
-//     dispatch({
-//       type: USER_LOADED,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     console.log('there is an error userdata-loading');
-//     dispatch({
-//       type: AUTH_ERROR,
-//     });
-//   }
-// };
 export const loadUser = () => async (dispatch) => {
   // set header
   if (AsyncStorage.token) {
@@ -82,9 +59,10 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       payload: res.data,
     });
 
-    // dispatch(loadUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
+    // this errors are the errors send form the backend
     if (errors) {
       // console.log("signup error: ",errors);
     }
@@ -117,16 +95,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
 
-    // set header
-    // const token = AsyncStorage.getItem('token')
-    if (res.data.token) {
-      setAuthToken(res.data.token);
-      console.log(axios.defaults.headers.common['x-auth-token']);
-    } else {
-      console.log('notoken');
-    }
-
-    // dispatch(loadUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
