@@ -13,6 +13,8 @@ import setAuthToken from '../setAuthToken';
 import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
 
+//  Load User
+
 // Register user
 export const register = (name, email, password) => async (dispatch) => {
   const config = {
@@ -53,7 +55,6 @@ export const loadUser = () => async (dispatch) => {
   const token = await AsyncStorage.getItem('token');
   if (token) {
     setAuthToken(token);
-    console.log(token);
   } else {
     console.log('notoken');
   }
@@ -88,22 +89,6 @@ export const login = (email, password) => async (dispatch) => {
       body,
       config
     );
-    // const wrongPass = 'Password did not match.';
-    // const wrongEmail = 'You are not Registered with us.';
-    // console.log('hello : ', res.data);
-    // if (res.data === wrongEmail || res.data === wrongPass) {
-    //   dispatch({
-    //     type: LOGIN_FAIL,
-    //     payload: res.data,
-    //   });
-    // } else {
-    //   dispatch({
-    //     type: LOGIN_SUCCESS,
-    //     payload: res.data,
-    //   });
-    // }
-
-    // dispatch(loadUser());
     const wrongPass = 'Password did not match.';
     const wrongEmail = 'You are not Registered with us.';
     if (res.data === wrongEmail || res.data === wrongPass) {
