@@ -56,8 +56,7 @@ export const loadUser = () => async (dispatch) => {
   // set header
   const token = await AsyncStorage.getItem('token');
   if (token) {
-     setAuthToken(token);
-    console.log(token);
+    setAuthToken(token);
   } else {
     console.log('notoken');
   }
