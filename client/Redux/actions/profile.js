@@ -15,7 +15,7 @@ import axios from 'axios';
 // This will run when user will login, to save his data in store and use it
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('192.168.0.9:3000/api/profile/me');
+    const res = await axios.get(`http://${ipAddress}:3000/api/profile/me`);
 
     dispatch({
       type: GET_MYPROFILE,
@@ -42,7 +42,7 @@ export const createProfile = (formData) => async (dispatch) => {
     };
 
     const res = await axios.post(
-      '192.168.0.9:3000/api/profile/me',
+      `http://${ipAddress}:3000/api/profile/me`,
       formData,
       config
     );
@@ -67,7 +67,7 @@ export const createProfile = (formData) => async (dispatch) => {
 export const getProfiles = (username) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `192.168.0.9:3000/api/profile/user/${username}`
+      `http://${ipAddress}:3000/api/profile/user/${username}`
     );
 
     dispatch({
@@ -87,7 +87,9 @@ export const getProfiles = (username) => async (dispatch) => {
 // get info about a particular user
 export const getProfileById = (user_id) => async (dispatch) => {
   try {
-    const res = await axios.get(`192.168.0.9:3000/api/profile/user/${user_id}`);
+    const res = await axios.get(
+      `http://${ipAddress}:3000/api/profile/user/${user_id}`
+    );
 
     dispatch({
       type: GETPARTICULARUSER,
@@ -104,7 +106,7 @@ export const getProfileById = (user_id) => async (dispatch) => {
 // // Delete account & profile
 // export const deleteAccount = () => async (dispatch) => {
 //   try {
-//     await axios.delete('192.168.0.9:3000/api/profile/');
+//     await axios.delete(`http://${ipAddress}:3000/api/profile/`);
 
 //     dispatch({ type: ACCOUNT_DELETED });
 

@@ -16,12 +16,13 @@ import { ipAddress } from '../ipaddress';
 //  Load User
 export const loadUser = () => async (dispatch) => {
   // set header
-  if (AsyncStorage.token) {
-    setAuthToken(AsyncStorage.token);
-    console.log(AsyncStorage.token);
-  } else {
-    console.log('notoken');
-  }
+  // const token = AsyncStorage.getItem('token');
+  // if (token) {
+  //   setAuthToken(token);
+  //   console.log(token);
+  // } else {
+  //   console.log('notoken');
+  // }
   try {
     const res = await axios.get(`http://${ipAddress}:3000/api/login`);
 
@@ -38,7 +39,7 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user
-export const register = (name, email, password ) => async (dispatch) => {
+export const register = (name, email, password) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -52,18 +53,13 @@ export const register = (name, email, password ) => async (dispatch) => {
       body,
       config
     );
-    // const res0 = await axios.get(
-    //   `http://${ipAddress}:3000/api/signup`,
-    // );
-    // console.log('hello : ',res0)
-    console.log(res.data)
+
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-    
-    // dispatch(loadUser())
-    
+
+    // dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
@@ -86,31 +82,29 @@ export const login = (email, password) => async (dispatch) => {
   };
 
   const body = JSON.stringify({ email, password });
-  
+
   try {
     const res = await axios.post(
       `http://${ipAddress}:3000/api/login`,
       body,
       config
     );
-    const wrongPass = 'Password did not match.';
-    const wrongEmail = 'You are not Registered with us.'
-    console.log('hello : ',res.data)
-    if(res.data === wrongEmail || res.data === wrongPass) {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: res.data
-      });
-    }else{
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      });
-    }
-
+    // const wrongPass = 'Password did not match.';
+    // const wrongEmail = 'You are not Registered with us.';
+    // console.log('hello : ', res.data);
+    // if (res.data === wrongEmail || res.data === wrongPass) {
+    //   dispatch({
+    //     type: LOGIN_FAIL,
+    //     payload: res.data,
+    //   });
+    // } else {
+    //   dispatch({
+    //     type: LOGIN_SUCCESS,
+    //     payload: res.data,
+    //   });
+    // }
 
     // dispatch(loadUser());
-
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array

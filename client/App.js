@@ -7,10 +7,14 @@ import MainComponent from './MainComponent';
 import setAuthToken from './Redux/setAuthToken';
 
 const App = () => {
-  useEffect(() => {
-    setAuthToken(AsyncStorage.token);
-    console.log(' App refreshed');
-  }, [setAuthToken]);
+  // useEffect(() => {
+  //   // console.log(AsyncStorage.token);
+  //   // if (AsyncStorage.token) {
+  //   //   setAuthToken(AsyncStorage.token);
+  //   //   console.log(AsyncStorage.token);
+  //   // }
+  //   console.log(' App refreshed');
+  // }, [setAuthToken]);
 
   return (
     <Provider store={store}>
