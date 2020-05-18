@@ -18,7 +18,7 @@ const LoginSchema = yup.object({
     
 })
 
-const Login = () => {
+const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
 
@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <SignUp visible={visible} setVisible={setVisible}/>
+      <SignUp visible={visible} setVisible={setVisible} navigation={navigation}/>
       <Formik 
         initialValues={{email: '', password: ''}}
         validationSchema={LoginSchema}

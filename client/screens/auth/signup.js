@@ -8,7 +8,7 @@ import { Formik} from 'formik';
 import * as yup from 'yup';
 // import GoogleSignin from './GoogleSigin';
 
-const SignUp = ({visible,setVisible}) => {
+const SignUp = ({visible,setVisible, navigation}) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth); 
   const [error, setError] = useState('')
@@ -26,8 +26,9 @@ const SignUp = ({visible,setVisible}) => {
   })
 
   const checkError = async () => {
-    const user = await auth.payload;
-    setError(user)
+    const err = await auth.payload;
+    const load = await auth.loading;
+    setError(err)
   }
 
   return (
@@ -47,6 +48,10 @@ const SignUp = ({visible,setVisible}) => {
           onSubmit={async ({ name, email, password }) => {
             dispatch(register(name, email, password));
             await checkError()
+            // if(!error){
+            //   navigation.navigate('UserDetail'); 
+            //   setVisible(false);
+            // }
           }}
         >
         {(props) => (

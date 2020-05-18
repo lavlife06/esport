@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const app = express();
+
 // Implementing cors
 app.use(cors());
 
@@ -11,7 +12,6 @@ connectDB();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 
 const sampleData = [
   { name: 'Bhavesh', age: 20 },
@@ -22,11 +22,10 @@ app.get('/api/name', (req, res) => {
   res.json(sampleData);
 });
 
-
-
-require('./backend/routes/authRoutes/signup')(app)
-require('./backend/routes/authRoutes/login')(app)
-require('./backend/routes/authRoutes/googleAuth')(app)
+require('./backend/routes/authRoutes/signup')(app);
+require('./backend/routes/authRoutes/login')(app);
+require('./backend/routes/authRoutes/googleAuth')(app);
+require('./backend/routes/profilepostsRoutes/profile')(app);
 
 const PORT = process.env.PORT || 3000;
 

@@ -8,11 +8,10 @@ import { globalStyles } from './styles/global';
 import AuthRoute from './routes/authStack';
 
 const MainComponent = () => {
-  const [isReady ,setIsReady] = useState(true)
-  if(!isReady){
-    return <AppLoading/>
-  }
-  else{
+  const [isReady, setIsReady] = useState(true);
+  if (!isReady) {
+    return <AppLoading />;
+  } else {
     return (
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
@@ -22,7 +21,5 @@ const MainComponent = () => {
     );
   }
 };
-
-
 
 export default MainComponent;

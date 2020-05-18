@@ -14,7 +14,7 @@ const AuthRoute = () => {
           component={Login}
         />
         <Stack.Screen
-          name='Your Detail'
+          name='UserDetail'
           component={UserDetail}
         />
       </Stack.Navigator>

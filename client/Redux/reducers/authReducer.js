@@ -25,7 +25,14 @@ export default (state = initialState, action) => {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       AsyncStorage.setItem('token', payload.token);
+      console.log({
+        ...state,
+        payload,
+        isAuthenticated: true,
+        loading: false,
+      })
       return {
+        ...state,
         payload,
         isAuthenticated: true,
         loading: false,

@@ -46,23 +46,27 @@ export const register = (name, email, password ) => async (dispatch) => {
   };
 
   const body = { name, email, password };
-  console.log(body)
   try {
     const res = await axios.post(
       `http://${ipAddress}:3000/api/signup`,
       body,
       config
     );
-    
+    // const res0 = await axios.get(
+    //   `http://${ipAddress}:3000/api/signup`,
+    // );
+    // console.log('hello : ',res0)
+    console.log(res.data)
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
     
-    loadUser()
+    // dispatch(loadUser())
     
   } catch (err) {
-    const errors = err.response.data.errors; 
+    const errors = err.response.data.errors;
+    // this errors are the errors send form the backend
     if (errors) {
       // console.log("signup error: ",errors);
     }
