@@ -3,18 +3,16 @@ import { Provider } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 import { store } from './Redux/store';
 import MainComponent from './MainComponent';
-
 import setAuthToken from './Redux/setAuthToken';
 
 const App = () => {
-  // useEffect(() => {
-  //   // console.log(AsyncStorage.token);
-  //   // if (AsyncStorage.token) {
-  //   //   setAuthToken(AsyncStorage.token);
-  //   //   console.log(AsyncStorage.token);
-  //   // }
-  //   console.log(' App refreshed');
-  // }, [setAuthToken]);
+  useEffect(() => {
+    const loadUser = async () => {
+      const token = await AsyncStorage.getItem('token');
+      setAuthToken(token);
+      console.log(' App refreshed');
+    };
+  }, [setAuthToken]);
 
   return (
     <Provider store={store}>
