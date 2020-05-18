@@ -25,13 +25,6 @@ const Login = ({ navigation }) => {
     setVisible(!visible);
   };
 
-  // const checkError = async () => {
-  //   const usertoken = await auth.token;
-  //   if (usertoken.length < 1) {
-  //     setError(usertoken);
-  //     console.log(usertoken);
-  //   }
-  // };
   const checkError = async () => {
     try {
       const user = await auth.payload;
@@ -53,8 +46,8 @@ const Login = ({ navigation }) => {
         validationSchema={LoginSchema}
         onSubmit={async ({ email, password }) => {
           dispatch(login(email, password));
-          // await checkError();
-          console.log(email, password);
+          await checkError();
+          console.log(isAuthenticated);
           if (isAuthenticated) navigation.navigate('Home');
         }}
       >
