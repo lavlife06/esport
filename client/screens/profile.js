@@ -5,7 +5,7 @@ const Profile = () => {
   return (
     <View>
       <Text>
-        Profile
+        Profile Screen
       </Text>
     </View>
   );

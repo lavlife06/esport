@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { AppLoading } from 'expo';
 import { ThemeProvider } from 'react-native-elements';
 import { theme } from './styles/theme';
-import Login from './screens/auth/login';
 import { View } from 'react-native';
 import AuthStack from './routes/authStack';
 import { globalStyles } from './styles/global';
-import DrawerStack from './routes/drawer';
 import { useSelector } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
+import TabStack from './routes/tabStack';
+import DrawerStack from './routes/drawerStack';
 
 const MainComponent = () => {
   const auth = useSelector(state => state.auth);
@@ -21,12 +20,10 @@ const MainComponent = () => {
     return (
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
-          {isAuthenticated ? (
-            <DrawerStack/>
+          {!isAuthenticated ? (
+            <AuthStack/>
           ): (
-            <NavigationContainer>
-              <AuthStack/>
-            </NavigationContainer>
+            <DrawerStack/>
           )}
         </View>
       </ThemeProvider>

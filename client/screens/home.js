@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <View>
       <Text>
-        Home
+        Home Screen
       </Text>
     </View>
   );

@@ -5,7 +5,7 @@ const Setting = () => {
   return (
     <View>
       <Text>
-        Setting
+        Setting Screen
       </Text>
     </View>
   );
