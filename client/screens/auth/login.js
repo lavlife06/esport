@@ -21,7 +21,7 @@ const LoginSchema = yup.object({
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
-
+  const isAuthenticated = auth.isAuthenticated;
   const [error, setError] = useState('')
   const [visible, setVisible] = useState(false);
 
@@ -31,7 +31,9 @@ const Login = ({navigation}) => {
 
   const checkError = async () => {
     const user = await auth.payload;
-    setError(user)
+    if(user.length < 100){
+      setError(user)
+    }
   }
 
   return (
@@ -43,6 +45,9 @@ const Login = ({navigation}) => {
         onSubmit={async ({email, password}) => {
           dispatch(login(email, password));
           await checkError()
+          console.log(isAuthenticated)
+          if(isAuthenticated) navigation.navigate('Home')
+          
         }}
       >
       {(props) => (

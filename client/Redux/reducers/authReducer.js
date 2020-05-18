@@ -46,6 +46,11 @@ export default (state = initialState, action) => {
     case SIGNUP_SUCCESS:
       return {payload}
     case LOGIN_FAIL:
+      return {
+        payload,
+        isAuthenticated: false,
+        loading: true,
+      }
     case AUTH_ERROR:
       AsyncStorage.removeItem('token');
       return {

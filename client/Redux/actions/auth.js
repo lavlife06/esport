@@ -93,11 +93,21 @@ export const login = (email, password) => async (dispatch) => {
       body,
       config
     );
+    const wrongPass = 'Password did not match.';
+    const wrongEmail = 'You are not Registered with us.'
+    console.log('hello : ',res.data)
+    if(res.data === wrongEmail || res.data === wrongPass) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: res.data
+      });
+    }else{
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    }
 
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
-    });
 
     // dispatch(loadUser());
 

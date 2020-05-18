@@ -26,9 +26,8 @@ module.exports = (app) => {
         return res.status(401).json({ errors: errors.array() });
       }
       let { name, email, password } = req.body;
-
+      
       // Remove space between the name if any
-      name = name.trim().split(' ').join('');
 
       try {
         // let user = await User.findOne({ email: email })
