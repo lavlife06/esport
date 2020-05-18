@@ -1,31 +1,32 @@
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../screens/auth/login'
-import SignUp from '../screens/auth/signup';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from '../screens/auth/login';
+import Home from '../screens/home';
+import TabStack from './tabStack';
+import { useSelector, useDispatch } from 'react-redux';
+const Stack = createStackNavigator()
 
-const Stack = createStackNavigator();
-
-const AuthNavigator = () => {
+const AuthStack = () => {
+  const auth = useSelector(state => state.auth);
+  const isAuthenticated = auth.isAuthenticated;
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
-          name="Login"
-          // options={({ navigation, route }) => ({
-          //   headerTitle: () => <Header navigation={navigation} title='About GameZone'/>,
-          // })}
-          component={Login} 
+      {!isAuthenticated ? (
+        <Stack.Screen
+          name='Auth'
+          component={Login}
         />
-        <Stack.Screen 
-          name="Sign Up"
-          // options={({ navigation, route }) => ({
-          //   headerTitle: () => <Header navigation={navigation} title='About GameZone'/>,
-          // })}
-          component={SignUp} 
+      ): (
+        <Stack.Screen
+          name='Home'
+          component={TabStack}
         />
+      )}
       </Stack.Navigator>
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }
  
-export default AuthNavigator;
+export default AuthStack;

@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'user',
+    ref: 'User',
+  },
+  DOB: {
+    type: Date
   },
   // tag: {
   //   type: String,
@@ -21,7 +24,7 @@ const profileSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
       },
     },
   ],
@@ -29,7 +32,7 @@ const profileSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
       },
     },
   ],

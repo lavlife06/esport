@@ -8,10 +8,6 @@ module.exports = (app) => {
   // Note:--
   // req.user.id comes from the token
 
-  // @route GET /api/profile/me
-  // desc   test route
-  // access Private
-
   app.get('/api/profile/me', verify, async (req, res) => {
     try {
       const profile = await Profile.findOne({
@@ -39,6 +35,7 @@ module.exports = (app) => {
       bio,
       gameinterest,
       instagram,
+      DOB,
       // eventname,
       // eventdescription,
       // location,
@@ -74,7 +71,7 @@ module.exports = (app) => {
     // if (youtube) profileFields.social.youtube = youtube;
     // if (facebook) profileFields.social.facebook = facebook;
     if (instagram) profileFields.social.instagram = instagram;
-
+    console.log(req.user.id)
     try {
       // Using upsert option (creates new doc if no match is found):
       let profile = await Profile.findOneAndUpdate(

@@ -12,6 +12,7 @@ export const LOGOUT = 'LOGOUT';
 export const GOOGLE_LOGIN = 'GOOGLE_LOGIN';
 export const GOOGLE_LOGOUT = 'GOOGLE_LOGOUT';
 export const GET_CACHED_AUTH_ASYNC = 'GET_CACHED_AUTH_ASYNC';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const GET_PROFILE = 'GET_PROFILE';
 export const GET_MYPROFILE = 'GET_MYPROFILE';
 export const GET_PROFILES = 'GET_PROFILES';

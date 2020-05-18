@@ -58,13 +58,13 @@ export default function (state = initialState, action) {
         loading: false,
         profile: null,
       };
-    case PROFILES_ERROR:
-      return {
-        ...state,
-        error: payload,
-        loading: false,
-        profiles: [],
-      };
+    // case PROFILES_ERROR:
+    //   return {
+    //     ...state,
+    //     error: payload,
+    //     loading: false,
+    //     profiles: [],
+    //   };
     case MYPROFILE_ERROR:
       return {
         ...state,

@@ -26,9 +26,8 @@ module.exports = (app) => {
         return res.status(401).json({ errors: errors.array() });
       }
       let { name, email, password } = req.body;
-
+      
       // Remove space between the name if any
-      name = name.trim().split(' ').join('');
 
       try {
         // let user = await User.findOne({ email: email })
@@ -36,9 +35,7 @@ module.exports = (app) => {
         let user = await User.findOne({ email });
         // See if user exits
         if (user) {
-          return res
-            .status(400)
-            .json({ errors: [{ msg: 'User already exits' }] });
+          return res.send('You already have an account.')
         }
 
         // Create tag

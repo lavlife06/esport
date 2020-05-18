@@ -35,17 +35,13 @@ module.exports = (app) => {
 
         // Check for existence of user exits
         if (!user) {
-          return res
-            .status(400)
-            .json({ errors: [{ msg: 'Invalid credentials' }] });
+          return res.send('You are not Registered with us.')
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         // user.password is from database
         if (!isMatch) {
-          return res
-            .status(400)
-            .json({ errors: [{ msg: 'Invalid credentials' }] });
+          return res.send('Password did not match.')
         }
         // Return jsonwebtokens
         let payload = {
@@ -60,12 +56,12 @@ module.exports = (app) => {
           { expiresIn: 25200 },
           (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json( token );
           }
         );
       } catch (err) {
         res.status(500).send('Server Error');
-        console.error(err.message);
+        console.error('login error server: ',err.message);
       }
     }
   );
