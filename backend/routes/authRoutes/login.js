@@ -56,7 +56,7 @@ module.exports = (app) => {
           { expiresIn: 25200 },
           (err, token) => {
             if (err) throw err;
-            res.json( token );
+            res.json({ token} );
           }
         );
       } catch (err) {

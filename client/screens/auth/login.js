@@ -30,9 +30,13 @@ const Login = ({navigation}) => {
   };
 
   const checkError = async () => {
-    const user = await auth.payload;
-    if(user.length < 100){
-      setError(user)
+    try{
+      const user = await auth.payload;
+      if(user.length < 100){
+        setError(user)
+      }
+    }catch(e){
+      
     }
   }
 

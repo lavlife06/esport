@@ -24,20 +24,17 @@ export default (state = initialState, action) => {
   switch (type) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      AsyncStorage.setItem('token', payload.token);
-      console.log({
-        ...state,
-        payload,
-        isAuthenticated: true,
-        loading: false,
-      })
       return {
-        ...state,
         payload,
         isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:
+      console.log({
+        isAuthenticated: true,
+        loading: false,
+        user: payload,
+      })
       return {
         isAuthenticated: true,
         loading: false,
