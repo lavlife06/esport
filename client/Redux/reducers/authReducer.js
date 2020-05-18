@@ -26,13 +26,17 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
       AsyncStorage.setItem('token', payload.token);
       return {
-        ...state,
         payload,
         isAuthenticated: true,
         loading: false,
         token: payload.token,
       };
     case USER_LOADED:
+      console.log({
+        isAuthenticated: true,
+        loading: false,
+        user: payload,
+      });
       return {
         isAuthenticated: true,
         loading: false,

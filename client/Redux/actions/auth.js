@@ -13,31 +13,6 @@ import setAuthToken from '../setAuthToken';
 import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
 
-//  Load User
-export const loadUser = () => async (dispatch) => {
-  // set header
-  // const token = AsyncStorage.getItem('token');
-  // if (token) {
-  //   setAuthToken(token);
-  //   console.log(token);
-  // } else {
-  //   console.log('notoken');
-  // }
-  try {
-    const res = await axios.get(`http://${ipAddress}:3000/api/login`);
-
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log('there is an error userdata-loading');
-    dispatch({
-      type: AUTH_ERROR,
-    });
-  }
-};
-
 // Register user
 export const register = (name, email, password) => async (dispatch) => {
   const config = {
@@ -59,7 +34,7 @@ export const register = (name, email, password) => async (dispatch) => {
       payload: res.data,
     });
 
-    // dispatch(loadUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
@@ -69,6 +44,30 @@ export const register = (name, email, password) => async (dispatch) => {
 
     dispatch({
       type: REGISTER_FAIL,
+    });
+  }
+};
+
+export const loadUser = () => async (dispatch) => {
+  // set header
+  const token = await AsyncStorage.getItem('token');
+  if (token) {
+    setAuthToken(token);
+    console.log(token);
+  } else {
+    console.log('notoken');
+  }
+  try {
+    const res = await axios.get(`http://${ipAddress}:3000/api/login`);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+    dispatch({
+      type: AUTH_ERROR,
     });
   }
 };
@@ -105,6 +104,22 @@ export const login = (email, password) => async (dispatch) => {
     // }
 
     // dispatch(loadUser());
+    const wrongPass = 'Password did not match.';
+    const wrongEmail = 'You are not Registered with us.';
+    if (res.data === wrongEmail || res.data === wrongPass) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: res.data,
+      });
+    } else {
+      await AsyncStorage.setItem('token', res.data.token);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    }
+
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array

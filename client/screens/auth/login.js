@@ -32,6 +32,14 @@ const Login = ({ navigation }) => {
   //     console.log(usertoken);
   //   }
   // };
+  const checkError = async () => {
+    try {
+      const user = await auth.payload;
+      if (user.length < 100) {
+        setError(user);
+      }
+    } catch (e) {}
+  };
 
   return (
     <View style={styles.container}>
