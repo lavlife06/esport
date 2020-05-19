@@ -29,6 +29,9 @@ const Profile = ({ navigation }) => {
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 
+  console.log(myprofileinfo);
+  const { followers, following, gameinterest, bio, name } = myprofileinfo.myprofile;
+  const GI = gameinterest ? gameinterest.join(' ') : 'No gameinterest provided';
   return (
     <View
       style={{
@@ -58,6 +61,8 @@ const Profile = ({ navigation }) => {
         size={60}
         rounded
         overlayContainerStyle={{ backgroundColor: 'black' }}
+        size="medium"
+        overlayContainerStyle={{ backgroundColor: 'gray' }}
         icon={{ name: 'user', type: 'font-awesome-5' }}
         onPress={() => console.log('Works!')}
         activeOpacity={1}

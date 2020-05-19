@@ -54,7 +54,7 @@ export const register = (name, email, password) => async (dispatch) => {
       body,
       config
     );
-
+    console.log('signup res.data: ',res.data)
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -76,10 +76,6 @@ export const register = (name, email, password) => async (dispatch) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
     }
-
-    dispatch({
-      type: REGISTER_FAIL,
-    });
   }
 };
 
@@ -111,7 +107,11 @@ export const login = (email, password) => async (dispatch) => {
     const token = await AsyncStorage.getItem('token');
     console.log(token);
     if (token) {
-      dispatch(getCurrentProfile());
+      try{
+        dispatch(getCurrentProfile());
+      }catch{
+
+      }
     }
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
@@ -119,7 +119,11 @@ export const login = (email, password) => async (dispatch) => {
     if (errors) {
       console.log('error from login', errors);
       errors.forEach((error) => {
-        dispatch(setAlert(error.msg, 'danger'));
+        try{
+          dispatch(setAlert(error.msg, 'danger'));
+        }catch(e){
+          
+        }
       });
     }
   }

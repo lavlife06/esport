@@ -22,7 +22,7 @@ const MainComponent = () => {
     const userLoad = async () => {
       const token = await AsyncStorage.getItem('token')
       setAuthToken(token);
-      // dispatch(loadUser());
+      dispatch(loadUser());
       console.log('App refreshed');
     }
     userLoad()

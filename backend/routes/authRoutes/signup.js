@@ -27,38 +27,20 @@ module.exports = (app) => {
       }
       let { name, email, password } = req.body;
 
-      // Remove space between the name if any
-
       try {
-        // let user = await User.findOne({ email: email })
-        //                  ||
+        
         let user = await User.findOne({ email });
         // See if user exits
         if (user) {
-          return res.send('You already have an account.');
+          return res
+            .status(404)
+            .json({ errors: [{ msg: 'You Already Have An Account' }] });
         }
 
-        // Create tag
-        let tag = `@${name}`;
-
-        // setupostinfo
-        let setuppostinfo = false;
-
-        // setupprofile
-        let setupprofile = false;
-
-        // Get avatar
-        // let avatar =
-
-        // Creating user instance
         user = new User({
           name,
           email,
-          password,
-          tag,
-          setuppostinfo,
-          setupprofile,
-          // avatar,
+          password
         });
 
         // Encrypt password

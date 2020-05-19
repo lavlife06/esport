@@ -4,61 +4,61 @@ import {MaterialIcons} from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux';
 import {StyleSheet, View} from 'react-native'
 import { register } from '../../Redux/actions/auth';
+import Modal from 'react-native-modal';
 import { Formik} from 'formik';
 import * as yup from 'yup';
-// import GoogleSignin from './GoogleSigin';
+import GoogleSignin from './GoogleSigin';
 
 const SignUp = ({visible,setVisible, navigation}) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth); 
-  const [error, setError] = useState('')
+  const isAuthenticated = auth.isAuthenticated;
 
   const signUpSchema = yup.object({
     name: yup.string()
-      .required()
+      .required('Name is required.')
       .min(4),
     email: yup.string()
-      .required()
+      .required('Email is required.')
       .email(),
     password: yup.string()
       .required('No password provided.') 
-      .min(8, 'Password is too short - should be 8 chars minimum.')
+      .min(8, 'Password is too short - should be 8 chars minimum.'),
+    passwordConfirm: yup.string()
+      .oneOf([yup.ref('password'), null], 'Passwords does not match')
   })
 
-  const checkError = async () => {
-    const err = await auth.payload;
-    const load = await auth.loading;
-    setError(err)
-  }
 
   return (
-    <Overlay overlayStyle={styles.overlay} isVisible={visible}>
+    <Modal 
+      style={styles.overlay}
+      isVisible={visible}
+      backdropColor="#3e3f42"
+      backdropOpacity={0.8}
+      onBackButtonPress={()=>setVisible(false)}
+      onBackdropPress={()=>setVisible(false)}
+      animationIn="zoomInDown"
+      animationOut="zoomOutUp"
+      animationInTiming={400}
+      animationOutTiming={400}
+      backdropTransitionInTiming={400}
+      backdropTransitionOutTiming={400}
+    >
+      <GoogleSignin title='Sign Up With Google' navigation={navigation}/>
       <View>
-        <View>
-          <MaterialIcons 
-            name='close'
-            size={24}
-            style={styles.modalClose}
-            onPress={() => setVisible(false)}
-          />
-        </View>
         <Formik 
-          initialValues={{name: '', email: '', password: ''}}
+          initialValues={{name: '', email: '', password: '', passwordConfirm: ''}}
           validationSchema={signUpSchema}
           onSubmit={async ({ name, email, password }) => {
             dispatch(register(name, email, password));
-            await checkError()
-            // if(!error){
-            //   navigation.navigate('UserDetail'); 
-            //   setVisible(false);
-            // }
+            if (isAuthenticated) navigation.navigate('Home');
           }}
         >
         {(props) => (
-          <View>
+          <View style={styles.content}>
             <Input
               leftIcon={<Icon name='face' size={24} color='#4ecca3' />}
-              placeholder="Enter your name"
+              placeholder="Name"
               onChangeText={props.handleChange('name')}
               value={props.values.name}
               onBlur={props.handleBlur('name')}
@@ -81,7 +81,15 @@ const SignUp = ({visible,setVisible, navigation}) => {
               onBlur={props.handleBlur('password')}
               errorMessage={props.touched.password && props.errors.password}
             />
-            <Text style={styles.errorText}>{error}</Text>
+            <Input
+              leftIcon={<Icon name='lock' size={24} color='#4ecca3' />}
+              secureTextEntry={true} 
+              placeholder="Confirm Password"
+              onChangeText={props.handleChange('passwordConfirm')}
+              value={props.values.passwordConfirm}
+              onBlur={props.handleBlur('passwordConfirm')}
+              errorMessage={props.touched.passwordConfirm && props.errors.passwordConfirm}
+            />
             <Button
               title='Sign Up'
               buttonStyle={styles.button}
@@ -91,21 +99,30 @@ const SignUp = ({visible,setVisible, navigation}) => {
         )}
         </Formik>
       </View>
-    </Overlay>
+    </Modal>
   );
 }
  
 const styles = StyleSheet.create({
+  overlay:{
+    backgroundColor: 'white',
+    margin: 0, // This is the important style you need to set
+    alignItems: undefined,
+    justifyContent: undefined,
+  },
   errorText: {
     marginTop: 0,
     color: 'crimson',
     textAlign: 'center'
   },
-  overlay: {
-    width: 300,
-    // height: 100
+  content: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
-  
   modalClose: {
     marginBottom: 10,
     borderWidth: 1,
@@ -121,12 +138,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
   }, 
-  errorText: {
-    color: 'crimson',
-    // fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 3
-  },
 });
 
 export default SignUp;
