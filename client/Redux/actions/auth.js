@@ -12,6 +12,7 @@ import axios from 'axios';
 import setAuthToken from '../setAuthToken';
 import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
+import { setAlert } from './alert';
 
 //  Load User
 
@@ -91,22 +92,11 @@ export const login = (email, password) => async (dispatch) => {
       body,
       config
     );
-    const wrongPass = 'Password did not match.';
-    const wrongEmail = 'You are not Registered with us.'
-    if(res.data === wrongEmail || res.data === wrongPass) {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: res.data
-      });
-    }else{
-      await AsyncStorage.setItem('token', res.data.token);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      });
-    }
-
-
+    await AsyncStorage.setItem('token', res.data.token);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
     dispatch(loadUser());
 
   } catch (err) {
@@ -114,19 +104,15 @@ export const login = (email, password) => async (dispatch) => {
     // that we setted as errors.array
     if (errors) {
       console.log('error from login', errors);
-      // errors.forEach((error) => {
-      //   dispatch(setAlert(error.msg, 'danger'));
-      // });
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
     }
-
-    dispatch({
-      type: LOGIN_FAIL,
-    });
   }
 };
 
-// // Logout / Clear Profile
-// export const logout = () => (dispatch) => {
-//   // dispatch({ type: CLEAR_PROFILE });
-//   dispatch({ type: LOGOUT });
-// };
+// Logout / Clear Profile
+export const logout = () => (dispatch) => {
+  // dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: LOGOUT });
+};

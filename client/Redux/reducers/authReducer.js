@@ -55,6 +55,7 @@ export default (state = initialState, action) => {
         isAuthenticated: null,
         loading: false,
       };
+    
     // case LOGOUT:
     //   AsyncStorage.removeItem('token');
     //   return {

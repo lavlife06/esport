@@ -12,7 +12,7 @@ import EventStack from './otherStack/eventStack';
 import ProfileStack from './otherStack/profileStack';
 import HomeStack from './otherStack/homeStack';
 import DrawerStack from './drawerStack';
-
+import {Icon} from 'react-native-elements'
 const Tab = createBottomTabNavigator();
 
 export default function TabStack() {
