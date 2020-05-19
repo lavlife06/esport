@@ -5,7 +5,7 @@ const Events = () => {
   return (
     <View>
       <Text>
-        Events
+        Events Screen
       </Text>
     </View>
   );

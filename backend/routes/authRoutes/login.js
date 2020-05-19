@@ -35,13 +35,17 @@ module.exports = (app) => {
 
         // Check for existence of user exits
         if (!user) {
-          return res.send('You are not Registered with us.');
+          return res
+            .status(404)
+            .json({ errors: [{ msg: 'You Are Not Registered With Us' }] });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         // user.password is from database
         if (!isMatch) {
-          return res.send('Password did not match.');
+          return res
+            .status(404)
+            .json({ errors: [{ msg: 'Password Did Not Match.' }] });
         }
         // Return jsonwebtokens
         let payload = {

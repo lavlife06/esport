@@ -13,6 +13,7 @@ import setAuthToken from '../setAuthToken';
 import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
 import { createProfile, getCurrentProfile } from './profile';
+import { setAlert } from './alert';
 
 //  Load User
 export const loadUser = () => async (dispatch) => {
@@ -70,7 +71,10 @@ export const register = (name, email, password) => async (dispatch) => {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
     if (errors) {
-      // console.log("signup error: ",errors);
+      console.log('error from signup', errors);
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
     }
 
     dispatch({
@@ -95,22 +99,8 @@ export const login = (email, password) => async (dispatch) => {
       body,
       config
     );
-    // console.log(res.data);
-    // const wrongPass = 'Password did not match.';
-    // const wrongEmail = 'You are not Registered with us.';
-    // if (res.data === wrongEmail || res.data === wrongPass) {
-    //   dispatch({
-    //     type: LOGIN_FAIL,
-    //     payload: res.data,
-    //   });
-    // } else {
-    //   await AsyncStorage.setItem('token', res.data.token);
-    //   dispatch({
-    //     type: LOGIN_SUCCESS,
-    //     payload: res.data,
-    //   });
-    // }
 
+    await AsyncStorage.setItem('token', res.data.token);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
@@ -128,14 +118,10 @@ export const login = (email, password) => async (dispatch) => {
     // that we setted as errors.array
     if (errors) {
       console.log('error from login', errors);
-      // errors.forEach((error) => {
-      //   dispatch(setAlert(error.msg, 'danger'));
-      // });
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
     }
-
-    dispatch({
-      type: LOGIN_FAIL,
-    });
   }
 };
 

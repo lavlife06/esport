@@ -11,7 +11,7 @@ const Home = () => {
   }, []);
   return (
     <View>
-      <Text>Home</Text>
+      <Text>Home Screen</Text>
       <Button
         title="Logout"
         onPress={() => {

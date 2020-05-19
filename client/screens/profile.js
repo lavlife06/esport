@@ -23,7 +23,7 @@ const Profile = () => {
       <Text>Followers:{followers ? followers.length : 0}</Text>
       <Text>Following:{following ? following.length : 0}</Text>
       <Text>
-        About:{bio ? bio : 'Please fill this pepole want to know about you'}
+        {bio ? bio : 'Please fill this pepole want to know about you'}
       </Text>
       <Text>Gameinterest:{GI}</Text>
     </View>

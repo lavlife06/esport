@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 import { store } from './Redux/store';
 import MainComponent from './MainComponent';
