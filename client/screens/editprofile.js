@@ -21,51 +21,54 @@ const Editprofile = () => {
       dispatch(getCurrentProfile());
     }
   }, [myprofileinfo, getCurrentProfile]);
-  return (
-    <View
-      style={{
-        // flex: 1,
-        padding: 15,
-        // backgroundColor: 'lightgreen',
-      }}
-    >
-      <Formik
-        initialValues={{ name, bio }}
-        validationSchema={reviewSchema}
-        onSubmit={(values) => {
-          dispatch(createProfile(values));
-          // values here is an object containing form data
+
+  if (myprofileinfo) {
+    return (
+      <View
+        style={{
+          // flex: 1,
+          padding: 15,
+          // backgroundColor: 'lightgreen',
         }}
       >
-        {(formikprops) => (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder={name ? name : 'Username'}
-              onChangeText={formikprops.handleChange('name')}
-              value={formikprops.values.name}
-              onBlur={formikprops.handleBlur('name')}
-            />
-            <Text style={styles.errorText}>
-              {formikprops.touched.name && formikprops.errors.name}
-            </Text>
-            <TextInput
-              style={styles.input}
-              multiline
-              placeholder={bio ? bio : 'Your Bio'}
-              onChangeText={formikprops.handleChange('bio')}
-              value={formikprops.values.bio}
-              onBlur={formikprops.handleBlur('bio')}
-            />
-            <Text style={styles.errorText}>
-              {formikprops.touched.bio && formikprops.errors.bio}
-            </Text>
-            <Button onPress={formikprops.handleSubmit} title="Save" />
-          </View>
-        )}
-      </Formik>
-    </View>
-  );
+        <Formik
+          initialValues={{ name, bio }}
+          validationSchema={reviewSchema}
+          onSubmit={(values) => {
+            dispatch(createProfile(values));
+            // values here is an object containing form data
+          }}
+        >
+          {(formikprops) => (
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder={name ? name : 'Username'}
+                onChangeText={formikprops.handleChange('name')}
+                value={formikprops.values.name}
+                onBlur={formikprops.handleBlur('name')}
+              />
+              <Text style={styles.errorText}>
+                {formikprops.touched.name && formikprops.errors.name}
+              </Text>
+              <TextInput
+                style={styles.input}
+                multiline
+                placeholder={bio ? bio : 'Your Bio'}
+                onChangeText={formikprops.handleChange('bio')}
+                value={formikprops.values.bio}
+                onBlur={formikprops.handleBlur('bio')}
+              />
+              <Text style={styles.errorText}>
+                {formikprops.touched.bio && formikprops.errors.bio}
+              </Text>
+              <Button onPress={formikprops.handleSubmit} title="Save" />
+            </View>
+          )}
+        </Formik>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
