@@ -17,11 +17,11 @@ import axios from 'axios';
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     const res = await axios.get(`http://${ipAddress}:3000/api/profile/me`);
-
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
     });
+    console.log(res.data)
   } catch (err) {
     console.error(err.response.data.msg);
     dispatch({

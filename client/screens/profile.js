@@ -7,13 +7,13 @@ const Profile = () => {
   const dispatch = useDispatch();
   const myprofileinfo = useSelector((state) => state.profile);
   console.log(myprofileinfo);
-  const { followers, following, gameinterest, bio, name } = myprofileinfo;
+  const { followers, following, gameinterest, bio, name } = myprofileinfo.myprofile;
   const GI = gameinterest ? gameinterest.join(' ') : 'No gameinterest provided';
   return (
     <View>
       <Avatar
         size="medium"
-        overlayContainerStyle={{ backgroundColor: 'yellow' }}
+        overlayContainerStyle={{ backgroundColor: 'gray' }}
         icon={{ name: 'user', type: 'font-awesome-5' }}
         onPress={() => console.log('Works!')}
         activeOpacity={0.7}

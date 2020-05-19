@@ -16,7 +16,6 @@ const Alert = () => {
   useEffect(() => {
     if(alerts){
       setVisible(true)
-      // setTimeout(()=> setVisible(false), 3000)
     }
   },[alerts])
 

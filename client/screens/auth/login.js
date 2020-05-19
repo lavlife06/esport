@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import SignUp from './signup';
+import GoogleSignin from './GoogleSigin';
 
 const LoginSchema = yup.object({
   email: yup.string().required().email(),
@@ -27,64 +28,61 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {!loading ? (
-        <ActivityIndicator size="large" color="#00ff00" />
-      ) : (
-        <View>
-          <SignUp
-            visible={visible}
-            setVisible={setVisible}
-            navigation={navigation}
-          />
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            validationSchema={LoginSchema}
-            onSubmit={async ({ email, password }) => {
-              dispatch(login(email, password));
-              if (isAuthenticated) navigation.navigate('Home');
-            }}
-          >
-            {(props) => (
-              <View>
-                <Input
-                  leftIcon={<Icon name="email" size={24} color="#4ecca3" />}
-                  style={styles.input}
-                  placeholder="Email"
-                  onChangeText={props.handleChange('email')}
-                  value={props.values.email}
-                  onBlur={props.handleBlur('email')}
-                  errorMessage={props.touched.email && props.errors.email}
-                />
+      <View>
+        <GoogleSignin title='Sign In With Google' navigation={navigation}/>
+        <SignUp
+          visible={visible}
+          setVisible={setVisible}
+          navigation={navigation}
+        />
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={LoginSchema}
+          onSubmit={async ({ email, password }) => {
+            dispatch(login(email, password));
+            if (isAuthenticated) navigation.navigate('Home');
+          }}
+        >
+          {(props) => (
+            <View>
+              <Input
+                leftIcon={<Icon name="email" size={24} color="#4ecca3" />}
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={props.handleChange('email')}
+                value={props.values.email}
+                onBlur={props.handleBlur('email')}
+                errorMessage={props.touched.email && props.errors.email}
+              />
 
-                <Input
-                  leftIcon={<Icon name="lock" size={24} color="#4ecca3" />}
-                  secureTextEntry={true}
-                  style={styles.input}
-                  placeholder="Password"
-                  onChangeText={props.handleChange('password')}
-                  value={props.values.password}
-                  onBlur={props.handleBlur('password')}
-                  errorMessage={props.touched.password && props.errors.password}
-                />
-                <Button
-                  title="Login"
-                  buttonStyle={styles.button}
-                  onPress={props.handleSubmit}
-                />
-              </View>
-            )}
-          </Formik>
-          <View style={{ flexDirection: 'row' }}>
-            <Text>Don't have an account?</Text>
-            <TouchableOpacity>
-              <Text onPress={toggleOverlay} style={{ color: '#4ecca3' }}>
-                {' '}
-                Sign Up
-              </Text>
-            </TouchableOpacity>
-          </View>
+              <Input
+                leftIcon={<Icon name="lock" size={24} color="#4ecca3" />}
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="Password"
+                onChangeText={props.handleChange('password')}
+                value={props.values.password}
+                onBlur={props.handleBlur('password')}
+                errorMessage={props.touched.password && props.errors.password}
+              />
+              <Button
+                title="Sign In"
+                buttonStyle={styles.button}
+                onPress={props.handleSubmit}
+              />
+            </View>
+          )}
+        </Formik>
+        <View style={{ flexDirection: 'row', justifyContent:'center' }}>
+          <Text style={{fontSize: 20}}>Don't have an account?</Text>
+          <TouchableOpacity>
+            <Text onPress={toggleOverlay} style={{ color: '#4ecca3', fontSize: 20 }}>
+              {' '}
+              Sign Up
+            </Text>
+          </TouchableOpacity>
         </View>
-      )}
+      </View>
     </View>
   );
 };
@@ -92,6 +90,7 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 15,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignContent: 'center',

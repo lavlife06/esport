@@ -1,17 +1,24 @@
 import {  GOOGLE_LOGIN, GOOGLE_LOGOUT, GET_CACHED_AUTH_ASYNC} from '../actions/types';
+import { AsyncStorage } from 'react-native';
 
-const initialState = null
+const initialState = {
+  token: AsyncStorage.getItem('token'),
+  isAuthenticated: null,
+  loading: true,
+  user: null,
+};
 
 
 export default function(state = initialState, action){
   const {type, payload} = action
   switch(type){
     case GOOGLE_LOGIN:
-      return payload
-    case GOOGLE_LOGOUT:
-      return payload
-    case GET_CACHED_AUTH_ASYNC:
-      return payload
+      AsyncStorage.setItem('token', payload.token);
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+      };
     default: 
       return state
   }
