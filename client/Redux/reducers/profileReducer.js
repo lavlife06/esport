@@ -21,7 +21,7 @@ const initialState = {
   error: {},
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -87,4 +87,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};

@@ -7,14 +7,14 @@ const profileSchema = new Schema({
     ref: 'User',
   },
   DOB: {
-    type: Date
+    type: Date,
   },
   // tag: {
   //   type: String,
   // },
-  // name: {
-  //   type: String,
-  // },
+  name: {
+    type: String,
+  },
   bio: {
     type: String,
   },

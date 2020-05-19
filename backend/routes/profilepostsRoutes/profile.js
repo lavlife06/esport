@@ -44,13 +44,14 @@ module.exports = (app) => {
       // facebook,
       // platformname,
       // link,
-      // name,
+      name,
       // tag,
     } = req.body;
 
     // build profile object
     let profileFields = {};
     profileFields.user = req.user.id;
+    if (name) profileFields.name = name;
     // profileFields.achievements = [];
     // profileFields.otherlinks = [];
     if (bio) profileFields.bio = bio;
@@ -71,7 +72,6 @@ module.exports = (app) => {
     // if (youtube) profileFields.social.youtube = youtube;
     // if (facebook) profileFields.social.facebook = facebook;
     if (instagram) profileFields.social.instagram = instagram;
-    console.log(req.user.id)
     try {
       // Using upsert option (creates new doc if no match is found):
       let profile = await Profile.findOneAndUpdate(

@@ -13,6 +13,15 @@ export default function DrawerStack() {
       <Drawer.Navigator>
         <Drawer.Screen name="Home" component={AuthStack} />
         <Drawer.Screen name="Setting" component={Setting} />
+        {/* <Drawer.Section >
+        <Drawer.Item
+          label="Logout"
+          onPress={() => { 
+            
+            navigation.navigate('Login') 
+            }}
+        />
+     </Drawer.Section> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

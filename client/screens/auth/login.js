@@ -47,7 +47,6 @@ const Login = ({ navigation }) => {
         onSubmit={async ({ email, password }) => {
           dispatch(login(email, password));
           await checkError();
-          console.log(isAuthenticated);
           if (isAuthenticated) navigation.navigate('Home');
         }}
       >

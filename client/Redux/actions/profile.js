@@ -9,6 +9,7 @@ import {
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
 } from './types';
+import { ipAddress } from '../ipaddress';
 import axios from 'axios';
 
 // Get current users profile
@@ -57,7 +58,7 @@ export const createProfile = (formData) => async (dispatch) => {
 
     dispatch({
       type: MYPROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: err.response.data,
     });
   }
 };
