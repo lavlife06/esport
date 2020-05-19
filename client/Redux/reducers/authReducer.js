@@ -5,8 +5,7 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  SIGNUP_SUCCESS,
-  // LOGOUT,
+  LOGOUT,
   // ACCOUNT_DELETED,
 } from '../actions/types';
 
@@ -24,8 +23,9 @@ export default (state = initialState, action) => {
   switch (type) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
+      AsyncStorage.setItem('token', payload.token);
       return {
-        payload,
+        ...state,
         isAuthenticated: true,
         loading: false,
       };
@@ -34,20 +34,20 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
         loading: false,
         user: payload,
-      })
+      });
       return {
         isAuthenticated: true,
         loading: false,
         user: payload,
       };
-    case SIGNUP_SUCCESS:
-      return {payload}
+
     case LOGIN_FAIL:
+    case REGISTER_FAIL:
       return {
         payload,
         isAuthenticated: false,
         loading: true,
-      }
+      };
     case AUTH_ERROR:
       AsyncStorage.removeItem('token');
       return {
@@ -55,16 +55,15 @@ export default (state = initialState, action) => {
         isAuthenticated: null,
         loading: false,
       };
-    
-    // case LOGOUT:
-    //   AsyncStorage.removeItem('token');
-    //   return {
-    //     ...state,
-    //     token: null,
-    //     isAuthenticated: false,
-    //     loading: false,
-    //     user: null,
-    //   };
+    case LOGOUT:
+      AsyncStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+      };
     default:
       return state;
   }

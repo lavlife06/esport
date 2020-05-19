@@ -26,7 +26,7 @@ module.exports = (app) => {
         return res.status(401).json({ errors: errors.array() });
       }
       let { name, email, password } = req.body;
-      
+
       // Remove space between the name if any
 
       try {
@@ -35,7 +35,7 @@ module.exports = (app) => {
         let user = await User.findOne({ email });
         // See if user exits
         if (user) {
-          return res.send('You already have an account.')
+          return res.send('You already have an account.');
         }
 
         // Create tag
@@ -67,7 +67,7 @@ module.exports = (app) => {
 
         // Save data to atlas
         await user.save(); // In atlas data will be saved
-        console.log('user added')
+        console.log('user added');
         // create jsonwebtoken
         let payload = {
           user: {
@@ -75,15 +75,10 @@ module.exports = (app) => {
           },
         };
 
-        jwt.sign(
-          payload,
-          keys.jwtSecret,
-          { expiresIn: 25200 },
-          (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-          }
-        );
+        jwt.sign(payload, keys.jwtSecret, { expiresIn: 3600 }, (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        });
       } catch (err) {
         res.status(500).send('Server Error');
         console.error(err.message);
