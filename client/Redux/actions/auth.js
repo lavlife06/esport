@@ -109,7 +109,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loadUser());
 
     const token = await AsyncStorage.getItem('token');
-
+    console.log(token);
     if (token) {
       dispatch(getCurrentProfile());
     }
