@@ -11,21 +11,26 @@ import Alert from './shared/alert';
 import { AsyncStorage } from 'react-native';
 import setAuthToken from './Redux/setAuthToken';
 import { loadUser } from './Redux/actions/auth';
+import { fetchallevents } from './Redux/actions/event';
+import Loading from './shared/loading';
 
 const MainComponent = () => {
-  const dispatch = useDispatch()
-  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const { auth, loading } = useSelector((state) => ({
+    auth: state.auth,
+    loading: state.loading,
+  }));
   const isAuthenticated = auth.isAuthenticated;
   const [isReady, setIsReady] = useState(true);
 
   useEffect(() => {
     const userLoad = async () => {
-      const token = await AsyncStorage.getItem('token')
+      const token = await AsyncStorage.getItem('token');
       setAuthToken(token);
       dispatch(loadUser());
-      console.log('App refreshed');
-    }
-    userLoad()
+      console.log('Main component refreshed');
+    };
+    userLoad();
   }, [setAuthToken]);
 
   if (!isReady) {
@@ -35,10 +40,12 @@ const MainComponent = () => {
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
           <Alert />
-          {!isAuthenticated ? (
-            <AuthStack/>
-          ): (
-            <DrawerStack/>
+          {loading ? (
+            <Loading />
+          ) : !isAuthenticated ? (
+            <AuthStack />
+          ) : (
+            <DrawerStack />
           )}
         </View>
       </ThemeProvider>

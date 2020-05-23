@@ -10,29 +10,31 @@ import setAuthToken from '../Redux/setAuthToken';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const allevents = useSelector((state) => state.event.allevents);
 
   useEffect(() => {
     const userLoad = async () => {
       const token = await AsyncStorage.getItem('token');
       setAuthToken(token);
-      dispatch(loadUser());
+      // dispatch(loadUser());
       if (token) {
         dispatch(fetchallevents());
+        console.log('token verified by fetchallevents');
       }
-      console.log('App refreshed');
+      console.log('Home Page refreshed');
     };
     userLoad();
   }, [loadUser, fetchallevents]);
 
-  const allevents = useSelector((state) => state.event.allevents);
-
   return (
     <View>
-      <FlatList
-        data={allevents}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => <Events item={[item]} />}
-      />
+      {allevents && (
+        <FlatList
+          data={allevents}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => <Events item={[item]} />}
+        />
+      )}
       <Button
         title="Logout"
         onPress={() => {

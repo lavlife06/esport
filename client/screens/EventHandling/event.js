@@ -18,6 +18,8 @@ const Event = ({ navigation }) => {
   const dispatch = useDispatch();
   const myevents = useSelector((state) => state.profile.myprofile.myevents);
 
+  // console.log(myevents);
+
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 

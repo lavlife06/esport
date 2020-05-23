@@ -23,12 +23,15 @@ export default (state = initialState, action) => {
   switch (type) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
+      console.log('LOGIN/REGISTER-SUCCESSFULL');
       AsyncStorage.setItem('token', payload.token);
       return {
         ...state,
+        isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:
+      console.log('USERLOADING-SUCCESSFULL');
       return {
         isAuthenticated: true,
         loading: false,
@@ -36,6 +39,7 @@ export default (state = initialState, action) => {
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
+      console.log('LOGIN/REGISTER-SUCCESSFULL');
       return {
         payload,
         isAuthenticated: false,
@@ -43,6 +47,7 @@ export default (state = initialState, action) => {
       };
     case AUTH_ERROR:
       AsyncStorage.removeItem('token');
+      console.log('AUTHERROR-SUCCESSFULL');
       return {
         ...state,
         isAuthenticated: false,
@@ -50,6 +55,7 @@ export default (state = initialState, action) => {
       };
     case LOGOUT:
       AsyncStorage.removeItem('token');
+      console.log('LOUGOUT-SUCCESSFULL');
       return {
         ...state,
         token: null,
