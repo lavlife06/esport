@@ -6,9 +6,9 @@ const keys = require('../../../config/keys');
 
 module.exports = (app) => {
   app.post('/api/google/login', async (req, res) => {
-    console.log('in side google server')
+    console.log('in side google server');
     try {
-      let { name, email } = req.body;     
+      let { name, email } = req.body;
       let user = await User.findOne({ email });
       // See if user exits
       if (user) {
@@ -21,14 +21,14 @@ module.exports = (app) => {
         jwt.sign(payload, keys.jwtSecret, { expiresIn: 3600 }, (err, token) => {
           if (err) throw err;
           res.json({ token });
-        })
-      }else{
+        });
+      } else {
         let newUser = new User({
           name,
-          email
+          email,
         });
         // Save data to atlas
-        await newUser.save(); 
+        await newUser.save();
         // In atlas data will be saved
         let payload = {
           user: {
@@ -41,13 +41,10 @@ module.exports = (app) => {
           res.json({ token });
         });
 
-        console.log('user from google added')
+        console.log('user from google added');
       }
-    }catch(e){
-      return res
-            .status(404)
-            .json({ errors: [{ msg: 'Error From Google' }] });
+    } catch (e) {
+      return res.status(404).json({ errors: [{ msg: 'Error From Google' }] });
     }
-  })
-  
-}
+  });
+};

@@ -21,12 +21,10 @@ export const getCurrentProfile = () => async (dispatch) => {
       type: GET_MYPROFILE,
       payload: res.data,
     });
-    console.log(res.data)
   } catch (err) {
-    console.error(err.response.data.msg);
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: 'Failed and error in getCurrentProfile' },
     });
   }
 };
@@ -54,11 +52,10 @@ export const createProfile = (formData) => async (dispatch) => {
     });
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.error(err.message);
 
     dispatch({
       type: MYPROFILE_ERROR,
-      payload: err.response.data,
+      payload: { msg: 'Failed and error in createProfile' },
     });
   }
 };
@@ -76,7 +73,6 @@ export const getProfiles = (username) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.error(err.message);
     dispatch({
       type: PROFILES_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },

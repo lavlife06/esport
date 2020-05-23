@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,28 +10,16 @@ import {
 import { Avatar, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Editprofile from './editprofile';
+import { addmyevent } from '../Redux/actions/event';
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const myprofileinfo = useSelector((state) => state.profile);
-  const {
-    followers,
-    following,
-    // gameinterest,
-    bio,
-    name,
-  } = myprofileinfo.myprofile;
-  // const GI =
-  //   gameinterest.length > 0
-  //     ? gameinterest.join(' ')
-  //     : 'No gameinterest provided';
+  const { followers, following, bio, name, myevents } = myprofileinfo.myprofile;
 
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 
-  console.log(myprofileinfo);
-  const { followers, following, gameinterest, bio, name } = myprofileinfo.myprofile;
-  const GI = gameinterest ? gameinterest.join(' ') : 'No gameinterest provided';
   return (
     <View
       style={{
@@ -92,9 +80,6 @@ const Profile = ({ navigation }) => {
             {bio ? bio : 'Please fill this pepole want to know about you'}
           </Text>
         </Text>
-        {/* <Text>
-          Gameinterest:<Text>{GI}</Text>
-        </Text> */}
       </View>
       <View style={{ position: 'relative', top: '5%' }}>
         <Button title="Edit" onPress={() => setModalOpen(true)} />
