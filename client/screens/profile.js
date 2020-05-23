@@ -4,12 +4,13 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
-  Modal,
   StyleSheet,
 } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Editprofile from './editprofile';
+import Modal from 'react-native-modal';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -29,9 +30,6 @@ const Profile = ({ navigation }) => {
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 
-  console.log(myprofileinfo);
-  const { followers, following, gameinterest, bio, name } = myprofileinfo.myprofile;
-  const GI = gameinterest ? gameinterest.join(' ') : 'No gameinterest provided';
   return (
     <View
       style={{
@@ -41,12 +39,22 @@ const Profile = ({ navigation }) => {
         height: '100%',
       }}
     >
-      <Modal visible={modalOpen} animationType="slide">
+      <Modal
+        style={styles.overlay}
+        isVisible={modalOpen}
+        backdropColor="#3e3f42"
+        animationIn='fadeInUp'
+        animationOut='fadeOutDown'
+        animationInTiming={200}
+        animationOutTiming={200}
+        backdropTransitionInTiming={400}
+        backdropTransitionOutTiming={400}
+        onBackButtonPress={()=>setModalOpen(false)}
+      >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{ flex: 1, backgroundColor: 'yellow' }}>
+          <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps='always'>
             <Editprofile />
-            <Button title="Go Back" onPress={() => setModalOpen(false)} />
-          </View>
+          </ScrollView>
         </TouchableWithoutFeedback>
       </Modal>
       <View
@@ -92,9 +100,6 @@ const Profile = ({ navigation }) => {
             {bio ? bio : 'Please fill this pepole want to know about you'}
           </Text>
         </Text>
-        {/* <Text>
-          Gameinterest:<Text>{GI}</Text>
-        </Text> */}
       </View>
       <View style={{ position: 'relative', top: '5%' }}>
         <Button title="Edit" onPress={() => setModalOpen(true)} />
@@ -102,5 +107,12 @@ const Profile = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  overlay:{
+    backgroundColor: 'white',
+    margin: 0, // This is the important style you need to set
+  },
+})
 
 export default Profile;

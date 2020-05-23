@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import profileReducer from './profileReducer';
 import googleAuthReducer from './googleAuthReducer';
 import alertReducer from './alertReducer';
+import loadingReducer from './loadingReducer';
 
 export default combineReducers({
   sample: sampleReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   profile: profileReducer,
   googleAuth: googleAuthReducer,
   alert: alertReducer,
+  loading: loadingReducer
 });

@@ -12,7 +12,7 @@ import {
 import { AsyncStorage } from 'react-native';
 
 const initialState = {
-  token: AsyncStorage.getItem('token'),
+  token: null,
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -23,18 +23,12 @@ export default (state = initialState, action) => {
   switch (type) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      AsyncStorage.setItem('token', payload.token);
       return {
         ...state,
         isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:
-      console.log({
-        isAuthenticated: true,
-        loading: false,
-        user: payload,
-      });
       return {
         isAuthenticated: true,
         loading: false,
@@ -49,14 +43,12 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case AUTH_ERROR:
-      AsyncStorage.removeItem('token');
       return {
         ...state,
         isAuthenticated: null,
         loading: false,
       };
     case LOGOUT:
-      AsyncStorage.removeItem('token');
       return {
         ...state,
         token: null,

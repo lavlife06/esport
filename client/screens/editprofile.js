@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../Redux/actions/profile';
+import { Button, Input } from 'react-native-elements';
 
 const reviewSchema = yup.object({
   name: yup.string().required().min(4),
@@ -25,11 +26,7 @@ const Editprofile = () => {
   if (myprofileinfo) {
     return (
       <View
-        style={{
-          // flex: 1,
-          padding: 15,
-          // backgroundColor: 'lightgreen',
-        }}
+        style={styles.content}
       >
         <Formik
           initialValues={{ name, bio }}
@@ -41,27 +38,24 @@ const Editprofile = () => {
         >
           {(formikprops) => (
             <View>
-              <TextInput
+              <Input
                 style={styles.input}
                 placeholder={name ? name : 'Username'}
                 onChangeText={formikprops.handleChange('name')}
                 value={formikprops.values.name}
                 onBlur={formikprops.handleBlur('name')}
+                errorMessage={formikprops.touched.name && formikprops.errors.name}
               />
-              <Text style={styles.errorText}>
-                {formikprops.touched.name && formikprops.errors.name}
-              </Text>
-              <TextInput
+              <Input
                 style={styles.input}
                 multiline
                 placeholder={bio ? bio : 'Your Bio'}
                 onChangeText={formikprops.handleChange('bio')}
                 value={formikprops.values.bio}
                 onBlur={formikprops.handleBlur('bio')}
+                errorMessage={formikprops.touched.bio && formikprops.errors.bio}
               />
-              <Text style={styles.errorText}>
-                {formikprops.touched.bio && formikprops.errors.bio}
-              </Text>
+              
               <Button onPress={formikprops.handleSubmit} title="Save" />
             </View>
           )}
@@ -72,21 +66,14 @@ const Editprofile = () => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
-    color: 'black',
-  },
-  errorText: {
-    color: 'black',
-    fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 6,
-    textAlign: 'center',
-  },
+
+  content: {
+    backgroundColor: 'white',
+    padding: 22,
+    borderTopStartRadius:30,
+    borderTopEndRadius: 30,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  }
 });
 
 export default Editprofile;

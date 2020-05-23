@@ -11,10 +11,14 @@ import Alert from './shared/alert';
 import { AsyncStorage } from 'react-native';
 import setAuthToken from './Redux/setAuthToken';
 import { loadUser } from './Redux/actions/auth';
+import Loading from './shared/loading';
 
 const MainComponent = () => {
   const dispatch = useDispatch()
-  const auth = useSelector(state => state.auth);
+  const {auth, loading} = useSelector(state => ({
+    auth: state.auth,
+    loading: state.loading
+  }));
   const isAuthenticated = auth.isAuthenticated;
   const [isReady, setIsReady] = useState(true);
 
@@ -35,10 +39,14 @@ const MainComponent = () => {
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
           <Alert />
-          {!isAuthenticated ? (
-            <AuthStack/>
+          {loading ? (
+            <Loading />
           ): (
-            <DrawerStack/>
+            !isAuthenticated ? (
+              <AuthStack/>
+            ): (
+              <DrawerStack/>
+            )
           )}
         </View>
       </ThemeProvider>

@@ -23,7 +23,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
     console.log(res.data)
   } catch (err) {
-    console.error(err.response.data.msg);
+    console.log(err.response.data.msg);
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
@@ -47,14 +47,15 @@ export const createProfile = (formData) => async (dispatch) => {
       formData,
       config
     );
-
+    console.log('creating profile......')
+    console.log(res.data)
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
     });
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.error(err.message);
+    console.log(err.message);
 
     dispatch({
       type: MYPROFILE_ERROR,
