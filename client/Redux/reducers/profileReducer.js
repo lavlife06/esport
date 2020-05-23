@@ -2,7 +2,7 @@ import {
   GET_PROFILES,
   GET_MYPROFILE,
   PROFILE_ERROR,
-  CLEAR_PROFILE,
+  CLEAR_MYPROFILE,
   CLEAR_PROFILES,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
@@ -11,11 +11,13 @@ import {
   CLEARPARTICULARUSER,
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
+  ADDEVENT_SUCCESS,
+  // FETCHEVENTS_SUCCESS
 } from '../actions/types';
 
 const initialState = {
-  myprofile: null,
-  particularuser: null,
+  myprofile: {},
+  particularuser: {},
   profiles: [],
   loading: true,
   error: {},
@@ -37,6 +39,10 @@ export default (state = initialState, action) => {
         ...state,
         profiles: payload,
         loading: false,
+      };
+    case ADDEVENT_SUCCESS:
+      return {
+        myevents: [...state.myevents, ...payload],
       };
     case SETPARTICULARUSER:
     case GETPARTICULARUSER:
@@ -70,12 +76,12 @@ export default (state = initialState, action) => {
         ...state,
         error: payload,
         loading: false,
-        myprofile: null,
+        myprofile: {},
       };
-    case CLEAR_PROFILE:
+    case CLEAR_MYPROFILE:
       return {
         ...state,
-        profile: null,
+        myprofile: {},
         loading: false,
       };
     case CLEAR_PROFILES:

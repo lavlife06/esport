@@ -26,21 +26,14 @@ export default (state = initialState, action) => {
       AsyncStorage.setItem('token', payload.token);
       return {
         ...state,
-        isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:
-      console.log({
-        isAuthenticated: true,
-        loading: false,
-        user: payload,
-      });
       return {
         isAuthenticated: true,
         loading: false,
         user: payload,
       };
-
     case LOGIN_FAIL:
     case REGISTER_FAIL:
       return {
@@ -52,7 +45,7 @@ export default (state = initialState, action) => {
       AsyncStorage.removeItem('token');
       return {
         ...state,
-        isAuthenticated: null,
+        isAuthenticated: false,
         loading: false,
       };
     case LOGOUT:

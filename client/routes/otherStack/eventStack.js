@@ -1,23 +1,22 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Events from '../../screens/events';
+import Event from '../../screens/EventHandling/event';
 import Header from '../../shared/header';
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 const EventStack = () => {
-
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Events'
+        name="Event"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title='Events'/>,
+          headerTitle: () => <Header navigation={navigation} title="Event" />,
         })}
-        component={Events}
+        component={Event}
       />
     </Stack.Navigator>
   );
-}
- 
+};
+
 export default EventStack;
