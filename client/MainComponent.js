@@ -12,6 +12,7 @@ import { AsyncStorage } from 'react-native';
 import setAuthToken from './Redux/setAuthToken';
 import { loadUser } from './Redux/actions/auth';
 import Loading from './shared/loading';
+import { fetchallevents } from './Redux/actions/event';
 
 const MainComponent = () => {
   const dispatch = useDispatch()
@@ -24,13 +25,16 @@ const MainComponent = () => {
 
   useEffect(() => {
     const userLoad = async () => {
-      const token = await AsyncStorage.getItem('token')
+      const token = await AsyncStorage.getItem('token');
       setAuthToken(token);
       dispatch(loadUser());
+      if (token) {
+        dispatch(fetchallevents());
+      }
       console.log('App refreshed');
-    }
-    userLoad()
-  }, [setAuthToken]);
+    };
+    userLoad();
+  }, [loadUser, fetchallevents]);
 
   if (!isReady) {
     return <AppLoading />;

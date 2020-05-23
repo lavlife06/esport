@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../Redux/actions/profile';
 import { Button, Input } from 'react-native-elements';
 
-const reviewSchema = yup.object({
+const profileSchema = yup.object({
   name: yup.string().required().min(4),
   bio: yup.string(),
   gameinterest: yup.string(),
@@ -30,7 +30,7 @@ const Editprofile = () => {
       >
         <Formik
           initialValues={{ name, bio }}
-          validationSchema={reviewSchema}
+          validationSchema={profileSchema}
           onSubmit={(values) => {
             dispatch(createProfile(values));
             // values here is an object containing form data

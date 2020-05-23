@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,21 +11,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Editprofile from './editprofile';
 import Modal from 'react-native-modal';
 import { ScrollView } from 'react-native-gesture-handler';
+import { addmyevent } from '../Redux/actions/event';
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const myprofileinfo = useSelector((state) => state.profile);
-  const {
-    followers,
-    following,
-    // gameinterest,
-    bio,
-    name,
-  } = myprofileinfo.myprofile;
-  // const GI =
-  //   gameinterest.length > 0
-  //     ? gameinterest.join(' ')
-  //     : 'No gameinterest provided';
+  const { followers, following, bio, name, myevents } = myprofileinfo.myprofile;
 
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);

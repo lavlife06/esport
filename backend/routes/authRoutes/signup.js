@@ -28,7 +28,6 @@ module.exports = (app) => {
       let { name, email, password } = req.body;
 
       try {
-        
         let user = await User.findOne({ email });
         // See if user exits
         if (user) {
@@ -40,7 +39,7 @@ module.exports = (app) => {
         user = new User({
           name,
           email,
-          password
+          password,
         });
 
         // Encrypt password
@@ -49,7 +48,7 @@ module.exports = (app) => {
 
         // Save data to atlas
         await user.save(); // In atlas data will be saved
-        console.log('user added');
+
         // create jsonwebtoken
         let payload = {
           user: {
@@ -63,7 +62,7 @@ module.exports = (app) => {
         });
       } catch (err) {
         res.status(500).send('Server Error');
-        console.error(err.message);
+        console.error('login error server: ', err.message);
       }
     }
   );

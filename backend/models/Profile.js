@@ -6,9 +6,36 @@ const profileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  DOB: {
-    type: Date,
-  },
+  DOB: Date,
+  myevents: [
+    {
+      game: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
+      image: {
+        data: Buffer,
+        contentType: String,
+      },
+      eventdate: {
+        from: Date,
+        to: Date,
+        hours: String,
+      },
+      prizepool: Number,
+      teamsize: Number,
+      title: String,
+      gamelink: String,
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   // tag: {
   //   type: String,
   // },

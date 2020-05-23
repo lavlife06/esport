@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CLEAR_MYPROFILE,
 } from './types';
 import axios from 'axios';
 // import { setAlert } from './alert';
@@ -51,7 +52,7 @@ export const register = (name, email, password) => async (dispatch) => {
     },
   };
 
-  const body = { name, email, password };
+  const body = JSON.stringify({ name, email, password });
   try {
     const res = await axios.post(
       `http://${ipAddress}:3000/api/signup`,
@@ -79,7 +80,6 @@ export const register = (name, email, password) => async (dispatch) => {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
     if (errors) {
-      console.log('error from signup', errors);
       errors.forEach((error) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
@@ -111,11 +111,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
-    });
-
-    
-    dispatch(loadUser());
-    
+    });    
     
     const token = await AsyncStorage.getItem('token');
     console.log(token);
@@ -133,13 +129,8 @@ export const login = (email, password) => async (dispatch) => {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
     if (errors) {
-      console.log('error from login', errors);
       errors.forEach((error) => {
-        try{
-          dispatch(setAlert(error.msg, 'danger'));
-        }catch(e){
-          
-        }
+        dispatch(setAlert(error.msg, 'danger'));
       });
     }
   }
@@ -148,6 +139,7 @@ export const login = (email, password) => async (dispatch) => {
 // Logout / Clear Profile
 export const logout = () => async (dispatch) => {
   await AsyncStorage.removeItem('token');
+  dispatch({ type: CLEAR_MYPROFILE });
   dispatch(loading(true))
   dispatch({ type: LOGOUT });
   dispatch(loading(false))
