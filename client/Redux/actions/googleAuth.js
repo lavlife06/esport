@@ -25,25 +25,24 @@ export const signInAsync = () => async dispatch => {
     let res = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${authState.accessToken}`
     );
-
-    dispatch(createProfile({ name: res.data.name }));
-
+    
     let resServer = await axios.post(
       `http://${ipAddress}:3000/api/google/login`,
       res.data
     );
+      
+      await AsyncStorage.setItem('token', resServer.data.token);
+      
+      dispatch({ type: GOOGLE_LOGIN, payload: resServer.data });
+      
+      const token = await AsyncStorage.getItem('token');
 
-    await AsyncStorage.setItem('token', resServer.data.token);
-
-    dispatch({ type: GOOGLE_LOGIN, payload: resServer.data });
-
-    const token = await AsyncStorage.getItem('token');
-
-    if (token) {
-      try {
+      if (token) {
+        try {
+        dispatch(createProfile({ name: res.data.name }));
         dispatch(getCurrentProfile());
       }catch(e){
-        console.log('error from googlr profile: ', e)
+        console.log('error from google profile: ', e)
       }
     }
     dispatch(loading(false))
@@ -55,6 +54,7 @@ export const signInAsync = () => async dispatch => {
       errors.forEach((error) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
+      dispatch(loading(false))
     }
   }
 };

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 
 const Alert = () => {
-  const alerts = useSelector((state) => state.alert);
+  const alerts = useSelector(state => state.alert);
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
