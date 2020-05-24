@@ -14,11 +14,11 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  myprofile: {},
-  particularuser: {},
+  myprofile: null,
+  particularuser: null,
   profiles: [],
   loading: true,
-  error: {},
+  error: null,
 };
 
 export default (state = initialState, action) => {

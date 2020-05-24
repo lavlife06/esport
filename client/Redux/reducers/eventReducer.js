@@ -9,6 +9,7 @@ import {
 // I have kept this initial state an object so when in future we want to add more stuff we can easily do in object
 const initialState = {
   allevents: [],
+  loading: true,
 };
 
 export default (state = initialState, action) => {

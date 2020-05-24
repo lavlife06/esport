@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Button, FlatList } from 'react-native';
+import { View, Button, FlatList, RefreshControl } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser, logout } from '../Redux/actions/auth';
@@ -7,10 +7,13 @@ import { AsyncStorage } from 'react-native';
 import { fetchallevents } from '../Redux/actions/event';
 import Events from './EventHandling/events';
 import setAuthToken from '../Redux/setAuthToken';
+import Loading from '../shared/loading';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const allevents = useSelector((state) => state.event.allevents);
+  const eventinfo = useSelector((state) => state.event);
+  const allevents = eventinfo.allevents;
+  let loading = eventinfo.loading;
 
   useEffect(() => {
     const userLoad = async () => {
@@ -26,23 +29,27 @@ const Home = () => {
     userLoad();
   }, [loadUser, fetchallevents]);
 
-  return (
-    <View>
-      {allevents && (
-        <FlatList
-          data={allevents}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <Events item={[item]} />}
+  if (loading) {
+    return <Loading />;
+  } else {
+    return (
+      <View>
+        {allevents && (
+          <FlatList
+            data={allevents}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => <Events item={[item]} />}
+          />
+        )}
+        <Button
+          title="Logout"
+          onPress={() => {
+            dispatch(logout());
+          }}
         />
-      )}
-      <Button
-        title="Logout"
-        onPress={() => {
-          dispatch(logout());
-        }}
-      />
-    </View>
-  );
+      </View>
+    );
+  }
 };
 
 export default Home;

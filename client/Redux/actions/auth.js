@@ -21,7 +21,7 @@ import { setAlert } from './alert';
 export const loadUser = () => async (dispatch) => {
   // set header
   const token = await AsyncStorage.getItem('token');
-  if (token) {
+  if (token.length > 0) {
     setAuthToken(token);
     console.log('token set successfull');
     try {
@@ -107,7 +107,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const token = await AsyncStorage.getItem('token');
 
-    if (token) {
+    if (token.length > 0) {
       dispatch(getCurrentProfile());
       console.log('token verified by getCurrentProfile');
     }

@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       return {
         payload,
         isAuthenticated: false,
-        loading: true,
+        loading: false,
       };
     case AUTH_ERROR:
       AsyncStorage.removeItem('token');
