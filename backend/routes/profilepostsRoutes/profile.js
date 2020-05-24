@@ -79,6 +79,7 @@ module.exports = (app) => {
         { $set: profileFields },
         { new: true, upsert: true }
       );
+      console.log('updating new profile')
       res.json(profile);
     } catch (err) {
       res.status(500).send('Server Error');

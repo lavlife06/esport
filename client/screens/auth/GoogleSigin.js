@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { signInAsync, getCachedAuthAsync, signOutAsync } from '../../Redux/actions/googleAuth';
-import {Text, Button,SocialIcon } from 'react-native-elements';
+import { signInAsync } from '../../Redux/actions/googleAuth';
+import { SocialIcon } from 'react-native-elements';
 
 
 

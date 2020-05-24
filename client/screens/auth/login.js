@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import SignUp from './signup';
 import GoogleSignin from './GoogleSigin';
+import Loading from '../../shared/loading';
 
 const LoginSchema = yup.object({
   email: yup.string().required().email(),
@@ -19,7 +20,6 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const isAuthenticated = auth.isAuthenticated;
-  const loading = auth.loading;
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
           initialValues={{ email: '', password: '' }}
           validationSchema={LoginSchema}
           onSubmit={async ({ email, password }) => {
-            dispatch(login(email, password));
+            dispatch(login(email.toLowerCase(), password));
             if (isAuthenticated) navigation.navigate('Home');
           }}
         >
@@ -101,12 +101,6 @@ const styles = StyleSheet.create({
     width: 100,
     alignSelf: 'center',
     marginTop: 5,
-  },
-  errorText: {
-    color: 'crimson',
-    // fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 3,
   },
 });
 

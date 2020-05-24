@@ -6,6 +6,7 @@ import { ipAddress } from '../ipaddress';
 import { loadUser } from './auth';
 import { setAlert } from './alert';
 import { getCurrentProfile, createProfile } from './profile';
+import {loading} from './loading';
 
 let config = {
   issuer: 'https://accounts.google.com',
@@ -14,8 +15,12 @@ let config = {
     '467702790820-h5khac5p024mdudn3956thvg0jns445i.apps.googleusercontent.com',
 };
 
-export const signInAsync = () => async (dispatch) => {
-  try {
+
+export const signInAsync = () => async dispatch => {
+  try{
+
+    dispatch(loading(true))
+
     let authState = await AppAuth.authAsync(config);
     let res = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${authState.accessToken}`
@@ -32,17 +37,18 @@ export const signInAsync = () => async (dispatch) => {
 
     dispatch({ type: GOOGLE_LOGIN, payload: resServer.data });
 
-    dispatch(loadUser());
-
     const token = await AsyncStorage.getItem('token');
 
     if (token) {
       try {
         dispatch(getCurrentProfile());
-      } catch {}
+      }catch(e){
+        console.log('error from googlr profile: ', e)
+      }
     }
-  } catch (err) {
-    const errors = err.response.data.errors;
+    dispatch(loading(false))
+  }catch(e){
+    const errors = e.response.data.errors;
     // this errors are the errors send form the backend
     if (errors) {
       console.log('error from signup', errors);

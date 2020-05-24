@@ -48,13 +48,15 @@ export const createProfile = (formData) => async (dispatch) => {
       body,
       config
     );
-
+    console.log('creating profile......')
+    console.log(res.data)
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
     });
   } catch (err) {
     // const errors = err.response.data.errors;
+    console.log(err.message);
 
     dispatch({
       type: CLEAR_MYPROFILE,

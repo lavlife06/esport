@@ -17,6 +17,7 @@ import { ipAddress } from '../ipaddress';
 import { createProfile, getCurrentProfile } from './profile';
 import { setAlert } from './alert';
 
+
 //  Load User
 export const loadUser = () => async (dispatch) => {
   // set header
@@ -40,6 +41,23 @@ export const loadUser = () => async (dispatch) => {
   } else {
     console.log('notoken');
   }
+
+  try {
+
+    const res = await axios.get(`http://${ipAddress}:3000/api/login`);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+
+    dispatch(getCurrentProfile());
+  } catch (err) {
+    // console.log(err.response.data);
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
 };
 
 // Register user
@@ -57,18 +75,22 @@ export const register = (name, email, password) => async (dispatch) => {
       body,
       config
     );
+
+    dispatch(loading(true))
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
 
+    
+    await AsyncStorage.setItem('token', res.data.token);
+    
+    dispatch(createProfile({ name }));
+    
     dispatch(loadUser());
-
-    const token = await AsyncStorage.getItem('token');
-
-    if (token) {
-      dispatch(createProfile({ name }));
-    }
+    
+    dispatch(loading(false))
+  
   } catch (err) {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
@@ -97,20 +119,31 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
+    dispatch(loading(true))
+
     await AsyncStorage.setItem('token', res.data.token);
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
-    });
-
-    dispatch(loadUser());
-
+    });    
+    
     const token = await AsyncStorage.getItem('token');
 
     if (token.length > 0) {
       dispatch(getCurrentProfile());
       console.log('token verified by getCurrentProfile');
+    console.log(token);
+    if (token) {
+      try{
+        dispatch(getCurrentProfile());
+      }catch{
+        
+      }
     }
+
+    dispatch(loading(false))
+  
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
@@ -123,8 +156,12 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 // Logout / Clear Profile
-export const logout = () => (dispatch) => {
+export const logout = () => async (dispatch) => {
+  await AsyncStorage.removeItem('token');
   dispatch({ type: CLEAR_MYPROFILE });
+  dispatch(loading(true))
   dispatch({ type: LOGOUT });
   dispatch({ type: CLEAR_EVENTS });
+  dispatch(loading(false))
+
 };
