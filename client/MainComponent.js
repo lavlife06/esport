@@ -19,14 +19,6 @@ const MainComponent = () => {
   const { auth, loading } = useSelector((state) => ({
     auth: state.auth,
     loading: state.loading,
-import Loading from './shared/loading';
-import { fetchallevents } from './Redux/actions/event';
-
-const MainComponent = () => {
-  const dispatch = useDispatch()
-  const {auth, loading} = useSelector(state => ({
-    auth: state.auth,
-    loading: state.loading
   }));
   const isAuthenticated = auth.isAuthenticated;
   const [isReady, setIsReady] = useState(true);
@@ -40,14 +32,6 @@ const MainComponent = () => {
     };
     userLoad();
   }, [setAuthToken]);
-      if (token) {
-        dispatch(fetchallevents());
-      }
-      console.log('App refreshed');
-    };
-    userLoad();
-  }, [loadUser, fetchallevents]);
-
   if (!isReady) {
     return <AppLoading />;
   } else {
@@ -61,12 +45,6 @@ const MainComponent = () => {
             <AuthStack />
           ) : (
             <DrawerStack />
-          ): (
-            !isAuthenticated ? (
-              <AuthStack/>
-            ): (
-              <DrawerStack/>
-            )
           )}
         </View>
       </ThemeProvider>
