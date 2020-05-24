@@ -29,8 +29,10 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
       };
     case LOGIN_SUCCESS:
+      console.log('LOGIN/REGISTER-SUCCESSFULL');
       return {
         ...state,
+        isAuthenticated: true,
         loading: false,
         isAuthenticated: true,
       };
@@ -41,6 +43,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case USER_LOADED:
+      console.log('USERLOADING-SUCCESSFULL');
       return {
         isAuthenticated: true,
         loading: false,
@@ -48,18 +51,21 @@ export default (state = initialState, action) => {
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
+      console.log('LOGIN/REGISTER-SUCCESSFULL');
       return {
         payload,
         isAuthenticated: false,
-        loading: true,
+        loading: false,
       };
     case AUTH_ERROR:
+      console.log('AUTHERROR-SUCCESSFULL');
       return {
         ...state,
         isAuthenticated: false,
         loading: false,
       };
     case LOGOUT:
+      console.log('LOUGOUT-SUCCESSFULL');
       return {
         ...state,
         token: null,

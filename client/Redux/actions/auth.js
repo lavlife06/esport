@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_MYPROFILE,
+  CLEAR_EVENTS,
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../setAuthToken';
@@ -20,12 +21,33 @@ import { loading } from './loading';
 //  Load User
 export const loadUser = () => async (dispatch) => {
   // set header
+  // dispatch(loading(true))
   const token = await AsyncStorage.getItem('token');
   if (token) {
     setAuthToken(token);
+    console.log('token set successfull');
+    try {
+      dispatch(loading(true))
+      const res = await axios.get(`http://${ipAddress}:3000/api/login`);
+      
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+
+      dispatch(loading(false))
+      
+    } catch (err) {
+      
+      dispatch({
+        type: AUTH_ERROR,
+      });
+      
+    }
   } else {
     console.log('notoken');
   }
+  // dispatch(loading(false))
   try {
 
     const res = await axios.get(`http://${ipAddress}:3000/api/login`);
@@ -101,7 +123,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     dispatch(loading(true))
-    console.log('wait logging in......')
+    console.log('wait logging in......');
     const res = await axios.post(
       `http://${ipAddress}:3000/api/login`,
       body,
@@ -117,8 +139,8 @@ export const login = (email, password) => async (dispatch) => {
     });    
     
     const token = await AsyncStorage.getItem('token');
-    console.log(token);
-    if (token) {
+
+    if (token.length > 0) {
       try{
         dispatch(getCurrentProfile());
       }catch{
@@ -127,7 +149,6 @@ export const login = (email, password) => async (dispatch) => {
     }
     console.log('logged in succesfull......')
     dispatch(loading(false))
-  
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array
@@ -146,5 +167,7 @@ export const logout = () => async (dispatch) => {
   await AsyncStorage.removeItem('token');
   dispatch({ type: CLEAR_MYPROFILE });
   dispatch({ type: LOGOUT });
+  dispatch({ type: CLEAR_EVENTS });
   dispatch(loading(false))
+
 };

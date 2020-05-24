@@ -11,16 +11,14 @@ import {
   CLEARPARTICULARUSER,
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
-  ADDEVENT_SUCCESS,
-  // FETCHEVENTS_SUCCESS
 } from '../actions/types';
 
 const initialState = {
-  myprofile: {},
-  particularuser: {},
+  myprofile: null,
+  particularuser: null,
   profiles: [],
   loading: true,
-  error: {},
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -29,20 +27,18 @@ export default (state = initialState, action) => {
   switch (type) {
     case GET_MYPROFILE:
     case UPDATE_PROFILE:
+      console.log('GETMYPROFILE-SUCCESSFULL');
       return {
         ...state,
         myprofile: payload,
         loading: false,
       };
     case GET_PROFILES:
+      console.log('GETPROFILES-SUCCESSFULL');
       return {
         ...state,
         profiles: payload,
         loading: false,
-      };
-    case ADDEVENT_SUCCESS:
-      return {
-        myevents: [...state.myevents, ...payload],
       };
     case SETPARTICULARUSER:
     case GETPARTICULARUSER:
@@ -57,13 +53,13 @@ export default (state = initialState, action) => {
         particularuser: null,
         loading: false,
       };
-    case PROFILE_ERROR:
-      return {
-        ...state,
-        error: payload,
-        loading: false,
-        profile: null,
-      };
+    // case PROFILE_ERROR:
+    //   return {
+    //     ...state,
+    //     error: payload,
+    //     loading: false,
+    //     profile: null,
+    //   };
     // case PROFILES_ERROR:
     //   return {
     //     ...state,
@@ -71,14 +67,8 @@ export default (state = initialState, action) => {
     //     loading: false,
     //     profiles: [],
     //   };
-    case MYPROFILE_ERROR:
-      return {
-        ...state,
-        error: payload,
-        loading: false,
-        myprofile: {},
-      };
     case CLEAR_MYPROFILE:
+      console.log('CLEARMYPROFILE - SUCCESSFULL');
       return {
         ...state,
         myprofile: {},

@@ -9,31 +9,30 @@ const Alert = () => {
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
-    setVisible(!visible)
+    setVisible(!visible);
   };
-  
+
   useEffect(() => {
-    if(alerts){
-      setVisible(true)
+    if (alerts) {
+      setVisible(true);
     }
-  },[alerts])
+  }, [alerts]);
 
   return (
     <View>
-      { 
-        alerts !== null &&
+      {alerts !== null &&
         alerts.length > 0 &&
         alerts.map((alert) => (
           <View key={alert.id}>
-            <Modal 
+            <Modal
               testID={'modal'}
-              animationIn='bounceIn'
+              animationIn="bounceIn"
               backdropOpacity={0.8}
               onSwipeComplete={toggleOverlay}
               swipeDirection={['up', 'left', 'right', 'down']}
-              isVisible={visible} 
-              onBackButtonPress={toggleOverlay} 
-              style={styles.overLay} 
+              isVisible={visible}
+              onBackButtonPress={toggleOverlay}
+              style={styles.overLay}
               onBackdropPress={toggleOverlay}
             >
               <View style={styles.content}>
@@ -41,14 +40,13 @@ const Alert = () => {
               </View>
             </Modal>
           </View>
-        ))
-      }
+        ))}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  overLay:{
+  overLay: {
     justifyContent: 'flex-end',
     margin: 0,
   },
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
     padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopStartRadius:30,
+    borderTopStartRadius: 30,
     borderTopEndRadius: 30,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
@@ -65,6 +63,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 12,
   },
-})
+});
 
 export default Alert;
