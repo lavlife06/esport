@@ -12,16 +12,19 @@ import {
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 
 // Get current users profile
 // This will run when user will login, to save his data in store and use it
 export const getCurrentProfile = () => async (dispatch) => {
   try {
+    console.log('getting profile........');
     const res = await axios.get(`http://${ipAddress}:3000/api/profile/me`);
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
     });
+    console.log('profile added........');
   } catch (err) {
     dispatch({
       type: CLEAR_MYPROFILE,
@@ -35,11 +38,16 @@ export const getCurrentProfile = () => async (dispatch) => {
 // in that upsert was true so if user has no profile then it will be created or update
 export const createProfile = (formData) => async (dispatch) => {
   try {
+    const token = await AsyncStorage.getItem('token');
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
+        'X-Auth-Token': token,
       },
     };
+
+    console.log('creating profile.........');
 
     const body = JSON.stringify(formData);
 
@@ -53,6 +61,7 @@ export const createProfile = (formData) => async (dispatch) => {
       type: GET_MYPROFILE,
       payload: res.data,
     });
+    console.log('profile created........');
   } catch (err) {
     // const errors = err.response.data.errors;
     console.log(err.message);

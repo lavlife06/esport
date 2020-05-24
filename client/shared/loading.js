@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  justifyContent: 'center',
 });
 
 export default Loading;

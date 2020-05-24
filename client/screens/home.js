@@ -41,12 +41,6 @@ const Home = () => {
             renderItem={({ item }) => <Events item={[item]} />}
           />
         )}
-        <Button
-          title="Logout"
-          onPress={() => {
-            dispatch(logout());
-          }}
-        />
       </View>
     );
   }

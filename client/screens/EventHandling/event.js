@@ -2,18 +2,19 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Text,
   Keyboard,
   TouchableWithoutFeedback,
-  Modal,
   FlatList,
+  StyleSheet
 } from 'react-native';
-import { Avatar, Button } from 'react-native-elements';
+import Modal  from 'react-native-modal'
+import { Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 // import { addmyevent } from '../../Redux/actions/event';
 import Addevent from './addevent';
 import Events from './events';
 import Loading from '../../shared/loading';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Event = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -34,12 +35,24 @@ const Event = ({ navigation }) => {
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => <Events item={[item]} />}
         />
-        <Modal visible={modalOpen} animationType="slide">
+        <Modal
+          style={styles.overlay}
+          isVisible={modalOpen}
+          backdropColor="#3e3f42"
+          animationIn='fadeInUp'
+          animationOut='fadeOutDown'
+          animationInTiming={200}
+          animationOutTiming={200}
+          backdropTransitionInTiming={400}
+          backdropTransitionOutTiming={400}
+          onBackButtonPress={()=>setModalOpen(false)}
+        >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={{ flex: 1, backgroundColor: 'yellow' }}>
-              <Addevent navigation={navigation} />
-              <Button title="Go Back" onPress={() => setModalOpen(false)} />
-            </View>
+            <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps='always'>
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <Addevent navigation={navigation} />
+              </TouchableWithoutFeedback>
+            </ScrollView>
           </TouchableWithoutFeedback>
         </Modal>
         <Button title="Add Event" onPress={() => setModalOpen(true)} />
@@ -48,6 +61,16 @@ const Event = ({ navigation }) => {
   }
 };
 
+const styles = StyleSheet.create({
+  overlay:{
+    borderTopStartRadius: 40,
+    borderTopEndRadius: 40,
+    paddingTop: 50,
+    marginTop: 80,
+    backgroundColor: 'white',
+    margin: 0, // This is the important style you need to set
+  },
+})
+
 export default Event;
 
-// const styles = StyleSheet.create({});

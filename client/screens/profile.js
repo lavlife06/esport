@@ -69,20 +69,12 @@ const Profile = ({ navigation }) => {
             height: '100%',
           }}
         >
-          <Modal visible={modalOpen} animationType="slide">
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View style={{ flex: 1, backgroundColor: 'yellow' }}>
-                <Editprofile />
-                <Button title="Go Back" onPress={() => setModalOpen(false)} />
-              </View>
-            </TouchableWithoutFeedback>
-          </Modal>
           <View
             style={{
               height: '12%',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: 'yellow',
+              backgroundColor: 'gray',
             }}
           ></View>
           <Avatar
@@ -90,7 +82,7 @@ const Profile = ({ navigation }) => {
             rounded
             overlayContainerStyle={{ backgroundColor: 'black' }}
             size="medium"
-            overlayContainerStyle={{ backgroundColor: 'gray' }}
+            overlayContainerStyle={{ backgroundColor: 'violet' }}
             icon={{ name: 'user', type: 'font-awesome-5' }}
             onPress={() => console.log('Works!')}
             activeOpacity={1}

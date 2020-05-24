@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GOOGLE_LOGIN,
   // ACCOUNT_DELETED,
 } from '../actions/types';
 
@@ -22,9 +23,20 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+      };
     case LOGIN_SUCCESS:
       console.log('LOGIN/REGISTER-SUCCESSFULL');
-      AsyncStorage.setItem('token', payload.token);
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        isAuthenticated: true,
+      };
+    case GOOGLE_LOGIN:
       return {
         ...state,
         isAuthenticated: true,
@@ -46,7 +58,6 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case AUTH_ERROR:
-      AsyncStorage.removeItem('token');
       console.log('AUTHERROR-SUCCESSFULL');
       return {
         ...state,
@@ -54,7 +65,6 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case LOGOUT:
-      AsyncStorage.removeItem('token');
       console.log('LOUGOUT-SUCCESSFULL');
       return {
         ...state,

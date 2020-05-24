@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   // Get token from header
-  const token = req.header('x-auth-token');
-  // console.log(req.headers);
-  // Check for token
+  const token = await req.header('x-auth-token');
+  
   if (!token) {
+    console.log('not authorized')
     return res
       .status(401)
       .json({ errors: [{ msg: 'No token, authorization denied' }] });
@@ -19,7 +19,9 @@ module.exports = (req, res, next) => {
     req.user = decoded.user; // Now req.user will be acessed from anywhere
 
     next();
+
   } catch (err) {
+    console.log(err)
     return res.status(401).json({ errors: [{ msg: 'Token is not valid' }] });
   }
 };

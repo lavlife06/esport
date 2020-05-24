@@ -28,10 +28,14 @@ const MainComponent = () => {
       const token = await AsyncStorage.getItem('token');
       setAuthToken(token);
       dispatch(loadUser());
-      console.log('Main component refreshed');
+      if (token) {
+        dispatch(fetchallevents());
+      }
+      console.log('App refreshed');
     };
     userLoad();
-  }, [setAuthToken]);
+  }, [loadUser, fetchallevents]);
+
   if (!isReady) {
     return <AppLoading />;
   } else {
@@ -39,13 +43,11 @@ const MainComponent = () => {
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
           <Alert />
-          {loading ? (
-            <Loading />
-          ) : !isAuthenticated ? (
-            <AuthStack />
-          ) : (
-            <DrawerStack />
-          )}
+          {loading ? <Loading /> : <DrawerStack />}
+          !isAuthenticated ? (
+          <AuthStack />
+          ): (
+          <DrawerStack />) ) }
         </View>
       </ThemeProvider>
     );
