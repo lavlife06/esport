@@ -7,7 +7,7 @@ import { SocialIcon } from 'react-native-elements';
 
 
 export default function GoogleSignin({title, navigation}) {
-  const auth = useSelector(state => state.googleAuth);
+  const auth = useSelector(state => state.auth);
   const isAuthenticated = auth.isAuthenticated;
   //authState is array of [authState, response.data] from action googleAuth
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function GoogleSignin({title, navigation}) {
           type='google'
           onPress={async () => {
             dispatch(signInAsync());
-            navigation.navigate('Home');
+            if(isAuthenticated) navigation.navigate('Home');
           }}
         />
       </View>

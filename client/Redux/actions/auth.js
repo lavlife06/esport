@@ -9,12 +9,12 @@ import {
   CLEAR_MYPROFILE,
 } from './types';
 import axios from 'axios';
-// import { setAlert } from './alert';
 import setAuthToken from '../setAuthToken';
 import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
 import { createProfile, getCurrentProfile } from './profile';
 import { setAlert } from './alert';
+import { loading } from './loading';
 
 
 //  Load User
@@ -29,7 +29,7 @@ export const loadUser = () => async (dispatch) => {
   try {
 
     const res = await axios.get(`http://${ipAddress}:3000/api/login`);
-
+    
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -37,7 +37,6 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch(getCurrentProfile());
   } catch (err) {
-    // console.log(err.response.data);
     dispatch({
       type: AUTH_ERROR,
     });
@@ -54,28 +53,30 @@ export const register = (name, email, password) => async (dispatch) => {
 
   const body = JSON.stringify({ name, email, password });
   try {
+    dispatch(loading(true))
     const res = await axios.post(
       `http://${ipAddress}:3000/api/signup`,
       body,
       config
     );
 
-    dispatch(loading(true))
+    console.log('registering....') 
+    
+    await AsyncStorage.setItem('token', res.data.token);
 
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
 
-    
-    await AsyncStorage.setItem('token', res.data.token);
+    console.log('register succes')
     
     dispatch(createProfile({ name }));
     
     dispatch(loadUser());
     
     dispatch(loading(false))
-  
+    
   } catch (err) {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
@@ -83,6 +84,7 @@ export const register = (name, email, password) => async (dispatch) => {
       errors.forEach((error) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
+      dispatch(loading(false))
     }
   }
 };
@@ -98,13 +100,14 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
+    dispatch(loading(true))
+    console.log('wait logging in......')
     const res = await axios.post(
       `http://${ipAddress}:3000/api/login`,
       body,
       config
     );
 
-    dispatch(loading(true))
 
     await AsyncStorage.setItem('token', res.data.token);
 
@@ -122,7 +125,7 @@ export const login = (email, password) => async (dispatch) => {
         
       }
     }
-
+    console.log('logged in succesfull......')
     dispatch(loading(false))
   
   } catch (err) {
@@ -132,15 +135,16 @@ export const login = (email, password) => async (dispatch) => {
       errors.forEach((error) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
+      dispatch(loading(false))
     }
   }
 };
 
 // Logout / Clear Profile
 export const logout = () => async (dispatch) => {
+  dispatch(loading(true))
   await AsyncStorage.removeItem('token');
   dispatch({ type: CLEAR_MYPROFILE });
-  dispatch(loading(true))
   dispatch({ type: LOGOUT });
   dispatch(loading(false))
 };

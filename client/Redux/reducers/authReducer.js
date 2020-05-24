@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GOOGLE_LOGIN,
   // ACCOUNT_DELETED,
 } from '../actions/types';
 
@@ -22,9 +23,21 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
+        loading: false,
+        isAuthenticated: true,
+      };
+    case GOOGLE_LOGIN:
+      return {
+        ...state,
+        isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:

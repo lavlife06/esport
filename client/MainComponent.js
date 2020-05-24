@@ -44,14 +44,15 @@ const MainComponent = () => {
         <View style={globalStyles.container}>
           <Alert />
           {loading ? (
-            <Loading />
-          ): (
+            <Loading/>
+          ) : (
             !isAuthenticated ? (
               <AuthStack/>
             ): (
               <DrawerStack/>
             )
-          )}
+          )
+          }
         </View>
       </ThemeProvider>
     );

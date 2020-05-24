@@ -6,7 +6,6 @@ import Modal from 'react-native-modal';
 
 const Alert = () => {
   const alerts = useSelector(state => state.alert);
-  console.log('alerts from Alert: ', alerts);
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {

@@ -11,8 +11,6 @@ import setAuthToken from '../Redux/setAuthToken';
 const Home = () => {
   const dispatch = useDispatch();
 
-  
-
   const allevents = useSelector((state) => state.event.allevents);
 
   return (

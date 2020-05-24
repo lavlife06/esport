@@ -11,7 +11,6 @@ export default combineReducers({
   sample: sampleReducer,
   auth: authReducer,
   profile: profileReducer,
-  googleAuth: googleAuthReducer,
   alert: alertReducer,
   loading: loadingReducer,
   event: eventReducer,
