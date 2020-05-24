@@ -48,8 +48,7 @@ export const createProfile = (formData) => async (dispatch) => {
       body,
       config
     );
-    console.log('creating profile......')
-    console.log(res.data)
+
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,

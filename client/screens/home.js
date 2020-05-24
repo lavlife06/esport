@@ -50,19 +50,5 @@ const Home = () => {
       </View>
     );
   }
-  
-
-  const allevents = useSelector((state) => state.event.allevents);
-
-  return (
-    <View>
-      <FlatList
-        data={allevents}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => <Events item={[item]} />}
-      />
-    </View>
-  );
 };
-
 export default Home;

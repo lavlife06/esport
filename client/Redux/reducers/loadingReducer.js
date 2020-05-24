@@ -1,4 +1,4 @@
-import { SET_ALERT, LOADING} from '../actions/types';
+import { SET_ALERT, LOADING } from '../actions/types';
 
 const initialState = false;
 

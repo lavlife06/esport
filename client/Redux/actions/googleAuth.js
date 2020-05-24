@@ -6,7 +6,7 @@ import { ipAddress } from '../ipaddress';
 import { loadUser } from './auth';
 import { setAlert } from './alert';
 import { getCurrentProfile, createProfile } from './profile';
-import {loading} from './loading';
+import { loading } from './loading';
 
 let config = {
   issuer: 'https://accounts.google.com',
@@ -15,11 +15,9 @@ let config = {
     '467702790820-h5khac5p024mdudn3956thvg0jns445i.apps.googleusercontent.com',
 };
 
-
-export const signInAsync = () => async dispatch => {
-  try{
-
-    dispatch(loading(true))
+export const signInAsync = () => async (dispatch) => {
+  try {
+    dispatch(loading(true));
 
     let authState = await AppAuth.authAsync(config);
     let res = await axios.get(
@@ -42,12 +40,12 @@ export const signInAsync = () => async dispatch => {
     if (token) {
       try {
         dispatch(getCurrentProfile());
-      }catch(e){
-        console.log('error from googlr profile: ', e)
+      } catch (e) {
+        console.log('error from googlr profile: ', e);
       }
     }
-    dispatch(loading(false))
-  }catch(e){
+    dispatch(loading(false));
+  } catch (e) {
     const errors = e.response.data.errors;
     // this errors are the errors send form the backend
     if (errors) {

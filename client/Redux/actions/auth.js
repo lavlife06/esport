@@ -16,6 +16,7 @@ import { AsyncStorage } from 'react-native';
 import { ipAddress } from '../ipaddress';
 import { createProfile, getCurrentProfile } from './profile';
 import { setAlert } from './alert';
+import { loading } from '../actions/loading';
 
 //  Load User
 export const loadUser = () => async (dispatch) => {
