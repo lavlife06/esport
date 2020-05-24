@@ -8,6 +8,7 @@ import {
   CLEAR_PROFILES,
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
+  CLEAR_MYPROFILE,
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -23,7 +24,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
   } catch (err) {
     dispatch({
-      type: PROFILE_ERROR,
+      type: CLEAR_MYPROFILE,
       payload: { msg: 'Failed and error in getCurrentProfile' },
     });
   }
@@ -40,9 +41,11 @@ export const createProfile = (formData) => async (dispatch) => {
       },
     };
 
+    const body = JSON.stringify(formData);
+
     const res = await axios.post(
       `http://${ipAddress}:3000/api/profile/me`,
-      formData,
+      body,
       config
     );
     console.log('creating profile......')
@@ -56,7 +59,7 @@ export const createProfile = (formData) => async (dispatch) => {
     console.log(err.message);
 
     dispatch({
-      type: MYPROFILE_ERROR,
+      type: CLEAR_MYPROFILE,
       payload: { msg: 'Failed and error in createProfile' },
     });
   }

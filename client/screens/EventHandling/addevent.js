@@ -3,7 +3,7 @@ import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addmyevent } from '../../Redux/actions/event';
+import { addmyevent, fetchallevents } from '../../Redux/actions/event';
 import { getCurrentProfile } from '../../Redux/actions/profile';
 
 const eventSchema = yup.object({
@@ -14,8 +14,8 @@ const eventSchema = yup.object({
   hours: yup.string(),
   gamelink: yup.string(),
   title: yup.string().required(),
-  prizepool: yup.number(),
-  teamsize: yup.number(),
+  prizepool: yup.number() /*.min(1)*/,
+  teamsize: yup.number() /*.min(1)*/,
 });
 
 const Addevent = () => {
@@ -40,9 +40,9 @@ const Addevent = () => {
           gamelink: '',
         }}
         validationSchema={eventSchema}
-        onSubmit={(values) => {
+        onSubmit={(values, actions) => {
+          actions.resetForm();
           dispatch(addmyevent(values));
-          // dispatch(getCurrentProfile());
           // values here is an object containing form data
         }}
       >
@@ -94,7 +94,9 @@ const Addevent = () => {
               style={styles.input}
               placeholder="prizepool -> e.g. 4000,5000"
               onChangeText={formikprops.handleChange('prizepool')}
-              value={formikprops.values.prizepool}
+              // Bhavesh niche ke line mai maine alag se `${}` karke value di hai kyuki ek warning aa rahi thi
+              // tu isko simple bana de and dekh kya warning aa rahi hai and vo warning solve kar dena
+              value={`${formikprops.values.prizepool}`}
               onBlur={formikprops.handleBlur('prizepool')}
             />
             <Text style={styles.errorText}>
@@ -104,7 +106,9 @@ const Addevent = () => {
               style={styles.input}
               placeholder="teamsize -> e.g. 2,3,4,16"
               onChangeText={formikprops.handleChange('teamsize')}
-              value={formikprops.values.teamsize}
+              // Bhavesh niche ke line mai maine alag se `${}` karke value di hai kyuki ek warning aa rahi thi
+              // tu isko simple bana de and dekh kya warning aa rahi hai and vo warning solve kar dena
+              value={`${formikprops.values.teamsize}`}
               onBlur={formikprops.handleBlur('teamsize')}
             />
             <Text style={styles.errorText}>

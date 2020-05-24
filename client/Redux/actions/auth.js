@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_MYPROFILE,
+  CLEAR_EVENTS,
 } from './types';
 import axios from 'axios';
 // import { setAlert } from './alert';
@@ -21,11 +22,26 @@ import { setAlert } from './alert';
 export const loadUser = () => async (dispatch) => {
   // set header
   const token = await AsyncStorage.getItem('token');
-  if (token) {
+  if (token.length > 0) {
     setAuthToken(token);
+    console.log('token set successfull');
+    try {
+      const res = await axios.get(`http://${ipAddress}:3000/api/login`);
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      // console.log(err.response.data);
+      dispatch({
+        type: AUTH_ERROR,
+      });
+    }
   } else {
     console.log('notoken');
   }
+
   try {
 
     const res = await axios.get(`http://${ipAddress}:3000/api/login`);
@@ -61,7 +77,6 @@ export const register = (name, email, password) => async (dispatch) => {
     );
 
     dispatch(loading(true))
-
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -114,6 +129,10 @@ export const login = (email, password) => async (dispatch) => {
     });    
     
     const token = await AsyncStorage.getItem('token');
+
+    if (token.length > 0) {
+      dispatch(getCurrentProfile());
+      console.log('token verified by getCurrentProfile');
     console.log(token);
     if (token) {
       try{
@@ -142,5 +161,7 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: CLEAR_MYPROFILE });
   dispatch(loading(true))
   dispatch({ type: LOGOUT });
+  dispatch({ type: CLEAR_EVENTS });
   dispatch(loading(false))
+
 };

@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../Redux/actions/profile';
+import Loading from '../shared/loading';
 import { Button, Input } from 'react-native-elements';
 
 const profileSchema = yup.object({
@@ -14,8 +15,9 @@ const profileSchema = yup.object({
 
 const Editprofile = () => {
   const dispatch = useDispatch();
-  const myprofileinfo = useSelector((state) => state.profile.myprofile);
-  const { name, bio } = myprofileinfo;
+  const myprofileinfo = useSelector((state) => state.profile);
+  const loading = myprofileinfo.loading;
+  const { bio, name } = myprofileinfo.myprofile;
 
   useEffect(() => {
     if (!myprofileinfo) {
@@ -23,7 +25,9 @@ const Editprofile = () => {
     }
   }, [myprofileinfo, getCurrentProfile]);
 
-  if (myprofileinfo) {
+  if (!myprofileinfo) {
+    return <Loading />;
+  } else {
     return (
       <View
         style={styles.content}
